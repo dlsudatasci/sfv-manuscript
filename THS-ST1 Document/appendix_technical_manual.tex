@@ -1,0 +1,288 @@
+\chapter{TikTok Analytics Exporter Technical Manual}
+\label{sec:appendixc}
+
+\section{Scope and Purpose}
+
+This technical manual documents the implementation-level details fo the TikTok Analytics Exporter, a Chrome browser extension developed as a data collection instrument of this study. This manual is a reference for readers who want a precise understanding of the extension's internal structure. This manual includes the technology stack, file and function inventory, execution context model, state management scheme, internal communication protocol, data structures, core algorithms, error handling strategy, Chrome API usage, and security model.
+
+User-facing workflows and data derivation details are addressed in Chapter \ref{sec:TikTok Analytics Exporter} and are not repeated here.
+
+\section{Technology Stack}
+
+\subsection{Programming Languages and Standards}
+
+The extension is implemented entirely in JavaScript (ES2022+), using ECMAScript module syntax for the background service worker and the shared parser library, and classic script loading for the popup and content scripts. No build step is required. HTML5 and CSS3 are used for the popup interface.
+
+This simple stack was chosen to minimize dependencies, simplify distribution, and ensure that every line of code can be inspected without the need for framework-specific knowledge.
+
+\subsection{Extension Platform: Manifest V3 Constraints}
+
+The extension targets Chrome Extensions Manifest Version 3 (MV3), the current mandatory Chrome extension architecture. Three MV3 design constraints directly shaped the implementation:
+
+\textbf{Service workers in place of persistent background pages.} The background script runs as a service worker that the browser may terminate and restart at any time when idle. All state that must survive a restart is therefore held in \texttt{chrome.storage.session} rather than in JavaScript heap variables.
+
+\textbf{Content script isolation.} Content scripts run in an isolated JavaScript world that shares the DOM with the host page but not its execution context. This isolation is the reason the extension requires a separate script (\texttt{injected.js}) running in the MAIN world.
+
+\textbf{MAIN world content script declaration.} MV3 introduced the ability to declare a content script with \texttt{"world": "MAIN"}, granting it access to the page's JavaScript context. The extension uses this mechanism for the injected.js script
+
+\subsection{Chrome Extension APIs}
+
+Table \ref{tab:chrome_api_usage} shows a list of the Chrome extension APIs used and what they were used for.
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{p{0.37\textwidth} p{0.6\textwidth}}
+        \toprule
+        \textbf{API} & \textbf{Purpose} \\
+        \midrule
+         \texttt{chrome.runtime.onMessage} / \texttt{sendMessage} & Cross-context message passing between content scripts, the service worker, and the popup \\
+         \texttt{chrome.storage.session} & Ephemeral session-scoped storage for export state; survives service worker restarts but clears on browser close \\
+         \texttt{chrome.tabs.query} & Identifies the active tab for the popup \\
+         \texttt{chrome.tabs.sendMessage} & Sends commands from the service worker to content scripts in a specific tab \\
+         \texttt{chrome.downloads.download} & Triggers the browser's save-as dialog for CSV file download \\
+         \texttt{chrome.runtime.onInstalled} & Initializes default state on first install or update \\
+        \bottomrule
+    \end{tabular}
+    \caption{Chrome extension APIs used and their purpose.}
+    \label{tab:chrome_api_usage}
+\end{table}
+
+\subsection{Web Platform APIs}
+
+Table \ref{tab:web_platform_api_usage} shows a list of the Chrome extension APIs used and what they were used for.
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{p{0.37\textwidth} p{0.60\textwidth}}
+        \toprule
+        \textbf{API} & \textbf{Purpose} \\
+        \midrule
+         \texttt{window.fetch} / \texttt{XMLHttpRequest} & Both are monkey-patched in the page context to intercept TikTok's network traffic; the unpatched fetch is also used for orchestrated API calls \\
+         \texttt{window.postMessage} & Communication between the MAIN world script and the isolated-world content script \\
+         \texttt{URL} / \texttt{URLSearchParams} & URL construction and query parameter manipulation for API endpoints \\
+         \texttt{Blob} / \texttt{URL.createObjectURL} & Client-side CSV file generation and download triggering \\
+         \texttt{document.documentElement} \texttt{.scrollHeight} / \texttt{window.scrollTo} & Programmatic page scrolling to trigger TikTok's lazy-loading pagination \\
+        \bottomrule
+    \end{tabular}
+    \caption{Web Platform APIs used and their purpose.}
+    \label{tab:web_platform_api_usage}
+\end{table}
+
+\subsection{Testing Infrastructure}
+
+The test suite runs on Node.js (any recent LTS version) using only built-in modules: \texttt{node:assert} (strict mode) for assertions, \texttt{node:fs/promises} for test file discovery, and \texttt{node:url} / \texttt{node:path} for module resolution. The test runner is a zero-dependency custom implementation providing \texttt{describe}/\texttt{test} globals, color-coded output, and a pass/fail summary. No \texttt{npm install step} is required.
+
+\section{Project Structure}
+
+\begin{verbatim}
+tiktok_analytics_exporter
+|-- manifest.json
+|-- background.js
+|-- content.js
+|-- injected.js
+|-- popup.html
+|-- popup.js
+|-- popup.css
+|-- README.md
+|-- SMOKE.md
+|
+|-- lib/
+|   `-- parsers.js
+|
+|-- tests/
+|   |-- run.js
+|   |
+|   |-- fixtures/
+|   |   |-- follower-history-synth.json
+|   |   `-- insight-minimal.json
+|   |
+|   |-- lib/
+|   |   `-- assert-helpers.js
+|   |
+|   `-- parsers/
+|       |-- buildFollowerHistoryURL.test.js
+|       |-- mapIndexToDate.test.js
+|       |-- parseFollowerHistoryResponse.test.js
+|       `-- parseInsightResponse.test.js
+|
+|-- icons/
+|
+|-- input/
+|
+`-- mockups/
+\end{verbatim}
+
+\texttt{manifest.json} is the Chrome MV3 extension manifest. It defines permissions, component scripts, and metadata used by the extension.
+
+\texttt{background.js} is the service worker. It acts as the central coordinator, state manager, and export orchestrator.
+
+\texttt{content.js} is the content script of the isolated world. It is the bridge for messages and where scroll automation occurs.
+
+\texttt{injected.js} is the content script of the MAIN world. It intercepts network signals and executes page fetching.
+
+\texttt{popup.html} is the extension UI. This is what the user sees when interacting with the extension.
+
+\texttt{lib/} contains \texttt{parsers.js}, which is a shared function library for transforming TikTok API responses into structured row objects. It is directly imported by \texttt{background.js} and the test suite.
+
+\texttt{tests/} contains the test runner, reusable assertion helpers, unit test files for each function in \texttt{lib/parsers.js}, and synthetic JSON fixtures mimicking TikTok API response shapes. Fixtures cover the happy path and edge cases including missing fields, non-zero status codes, unsorted keys, and type coercion.
+
+\texttt{icons/} contains PNG icon files referenced by the manifest.
+
+\texttt{input/} contains sample CSV output files generated during development and QA. It serves as reference artifacts for expected output format and column structure.
+
+\texttt{mockups/} contains static HTML prototype files for alternative UI designs.
+
+\section{Execution Contexts}
+
+The system operates across four distinct execution contexts, each with its own permissions, capabilities, and access restrictions.
+
+\textbf{The MAIN-world injected script} (\texttt{injected.js}) runs inside the TikTok page's own JavaScript environment, sharing its window object and access to the full DOM. Because it executes in the same realm as TikTok's front-end code, it can intercept the native fetch and XMLHttpRequest functions before they are used, and it can issue its own API calls using the browser's existing session cookies. However, it has no access to any Chrome extension APIs.
+
+\textbf{The isolated-world content script} (\texttt{content.js}) runs in a sandboxed JavaScript context that shares the page's DOM but not its window namespace or script environment. It can communicate with both injected.js and the service worker. It serves as a translation layer between the page-level and extension-level communication protocols.
+
+\textbf{The service worker} (\texttt{background.js}) runs as an ephemeral background process with full access to Chrome extension APIs, including chrome.storage, chrome.tabs, and chrome.downloads. It manages all persistent state, routes incoming messages, orchestrates the multi-step export workflows, and invokes the shared parsing library. Importantly, it has no access to the TikTok page's DOM or network traffic directly.
+
+\textbf{The extension popup} (\texttt{popup.html}, \texttt{popup.js}) is the user-facing control panel. It communicates with the service worker via message passing and polls the session storage every 750 milliseconds to render up-to-date progress information. It is also responsible for generating the CSV files from the parsed data rows and triggering their download.
+
+\section{File Reference}
+
+\subsection{\texttt{manifest.json}}
+
+This is the extension's sole configuration file. The key declarations are:
+\begin{itemize}
+    \item \verb|manifest_version: 3| — Required for new Chrome extensions; constrains the background script to a service worker model.
+    \item \verb|name: "My TikTok Analytics Backup"| — User-facing name emphasizing personal ownership; deliberately avoids language suggesting scraping.
+    \item \verb|version: "0.2.0"| — Semantic versioning indicating active pre-release development.
+    \item \verb|permissions|: \verb|["storage", "tabs", "scripting", "downloads"]| — Minimally set. \verb|scripting| is reserved for potential future use and is not actively invoked.
+    \item \verb|host_permissions|: \verb|["*://*.tiktok.com/*"]| — Required for content script injection and API interception across all TikTok subdomains.
+    \item Background service worker declared as \verb|"type": "module"| to enable \verb|import| statements within \verb|background.js|.
+    \item Two content script entries: \verb|injected.js| with \verb|"world": "MAIN"| and \\\verb|"all_frames": true|, this ensures interception runs in iframes as well as the main frame; \\\verb|content.js| with the default isolated world and \verb|"all_frames": false|. \\Both use \verb|"run_at": "document_start"| to ensure interception is established before TikTok's JavaScript begins making API calls.
+\end{itemize}
+
+\subsection{\texttt{injected.js}}
+
+This operates within the page's JavaScript context (MAIN world) to intercept all network traffic between TikTok's front-end and its APIs, and to execute orchestrated API calls using the page's authenticated session.
+
+\paragraph{\textbf{Guard Against Duplicate Injection}}
+
+\begin{verbatim}
+if (window.__ttExporterInstalled) return;
+    window.__ttExporterInstalled = true;
+\end{verbatim}
+
+This sentinel prevents re-execution during single-page application navigation within TikTok.
+
+\paragraph{\textbf{Preserved Originals}}
+
+\begin{verbatim}
+const ORIGINAL_FETCH = window.fetch.bind(window);
+const OriginalXHROpen  = XMLHttpRequest.prototype.open;
+const OriginalXHRSend  = XMLHttpRequest.prototype.send;
+\end{verbatim}
+
+The original fetch and XHR methods are saved before patching. This is critical for both correct interception (calls must still proceed normally) and for the page-fetch mechanism, which must use the unpatched fetch to avoid infinite recursion.
+
+\paragraph{\textbf{Intercept Pattern Matching}}
+
+The \texttt{INTERCEPT\_PATTERNS} array contains seven regular expressions covering known TikTok API endpoint patterns (Table \ref{tab:intercept_patterns}:
+
+\begin{table}
+    \centering
+    \begin{tabular}{ll}
+        \toprule
+        Pattern Target & Endpoint Examples \\
+        \midrule
+        Video list & \texttt{item\_list}, \texttt{aweme/post} \\
+        Analytics & \texttt{data/insight} \\
+        Profile & \texttt{profile/self}, \texttt{account\_info} \\
+        Studio & \texttt{tiktokstudio/api} \\
+        \bottomrule
+    \end{tabular}
+    \caption{Intercept patterns used in the extension.}
+    \label{tab:intercept_patterns}
+\end{table}
+
+A separate \texttt{URL\_LOG\_PATTERN} captures a broader set of TikTok API URLs for the debug log, including those not intercepted for data extraction.
+
+\paragraph{\textbf{\texttt{fetch} Patching}}
+
+The patched \texttt{fetch} function: (1) logs the URL for debug visibility; (2) calls the original \texttt{fetch} and awaits the response; (3) if the URL matches an intercept pattern, clones the response — to avoid consuming the body that TikTok's code needs — and reads its text asynchronously; (4) posts the response body and URL via \texttt{window.postMessage}; (5) returns the original response to TikTok's code, preserving normal application behavior.
+
+Response cloning is essential because a Response body can only be consumed once. The asynchronous \texttt{clone.text().then(...)} pattern ensures interception does not delay the original response delivery.
+
+\paragraph{\textbf{XHR Patching}}
+
+The XHR patch follows the same pattern, using the \texttt{load} event listener on each XHR instance to read \texttt{responseText} after the request completes.
+
+\paragraph{\textbf{\texttt{page-fetch} Handler}}
+
+The injected script listens for \texttt{page-fetch} messages from the content script. When received, it executes a \texttt{fetch()} call using the unpatched original function with \texttt{credentials: 'include'} — ensuring session cookies are sent — and posts the response back with the matching reqId for correlation.
+
+\subsection{\texttt{content.js}}
+
+This acts as a bidirectional communication bridge between \texttt{injected.js} (MAIN world, no Chrome API access) and the service worker (no window access).
+
+\paragraph{\textbf{Scroll Behavior Constants}}
+
+Table \ref{tab:scroll_behavior_constants} lists the constants used in the automation of scrolling behavior.
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{lll}
+        \toprule
+        Constant & Value & Purpose \\
+        \midrule
+         \texttt{SCROLL\_INTERVAL\_MS} & 1500 & Base interval between scroll steps (ms) \\
+         \texttt{SCROLL\_JITTER\_MS} & 500 & Maximum random offset added to each interval (ms) \\
+         \texttt{SCROLL\_STALL\_LIMIT} & 3 & Consecutive unchanged-height cycles before scroll concludes \\
+         \texttt{MAX\_SCROLL\_CYCLES} & 400 & Hard cap on scroll iterations (~10 minutes) \\
+        \bottomrule
+    \end{tabular}
+    \caption{Constants used for the automatic scrolling behavior.}
+    \label{tab:scroll_behavior_constants}
+\end{table}
+
+\paragraph{\textbf{Message Relay (MAIN → Service Worker)}}
+
+The \texttt{window.addEventListener('message')} handler filters by \texttt{source: 'tt-exporter-injected'} and forwards two message kinds to the \texttt{service worker: response} (intercepted API response bodies, forwarded as \texttt{intercepted-response}) and \texttt{url-seen} (URL log entries for the debug panel).
+
+\paragraph{\textbf{Page-Fetch Correlation}}
+
+The \texttt{pendingPageFetches} Map maintains a registry of in-flight page-fetch requests keyed by unique request IDs. When the service worker sends a \texttt{page-fetch} command, the content script generates a unique \texttt{reqId}, posts the request to \texttt{injected.js} via \texttt{window.postMessage}, and stores a Promise resolver in the Map. When \texttt{injected.js} posts back a \texttt{page-fetch-reply} with the matching \texttt{reqId}, the Promise resolves. A 30-second timeout prevents indefinite hanging if a fetch fails silently.
+
+\paragraph{\textbf{\texttt{scrollToBottom} Function}}
+
+Implements the stabilization-based scrolling algorithm (see Section ?? for the full algorithm description).
+
+\subsection{\texttt{background.js}}
+
+This is the extension's central coordinator. Manages all persistent state, routes messages between contexts, orchestrates multi-step export workflows, parses API responses, and coordinates timing of orchestrated API calls.
+
+\subsection{\texttt{lib/parsers.js}}
+
+\subsection{\texttt{popup.js}}
+
+\subsection{\texttt{popup.html} and \texttt{popup.css}}
+
+
+\section{State Management}
+
+\subsection{State Shape}
+
+\subsection{Storage Choice Rationale}
+
+\subsection{Video Map Key Choice}
+
+
+\section{Internal Communication Protocol}
+
+
+\section{Data Structures}
+
+\section{Algorithms}
+
+\section{Error Handling}
+
+\section{Chrome Extension API Reference}
+
+\section{Security Model}

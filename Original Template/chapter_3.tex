@@ -1,0 +1,47 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%   Filename    : chapter_3.tex 
+%
+%   Description : This file will contain your Theoretical Framework.
+%                 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{Theoretical Framework}
+\label{sec:theoframework}
+
+% Please refer to the following resources regarding Theoretical Framework: 
+
+% \begin{itemize}
+
+% \item \url{https://link.springer.com/chapter/10.1007/978-1-4419-1454-5_12}
+% \item \url{https://link.springer.com/article/10.1007/s10972-015-9443-2}
+
+
+
+\section{Crowdsourcing}
+Crowdsourcing, the process of collecting data from a large and distributed participant group, was instrumental in gathering real-time, location-specific data that reflects user experiences within urban environments. In urban cycling research, crowdsourced data helps fill critical gaps in understanding safety, infrastructure use, and user attitudes.
+
+Studies like \citet{Nelson:2020}. highlight the unique ability of crowdsourcing to capture nuanced insights about cyclist behaviors, safety incidents, and infrastructure needs that were otherwise missed by traditional data collection. Similarly, \citet{Jestico:2016} demonstrate that crowdsourced fitness app data can reveal spatial and temporal variations in cycling volumes, providing urban planners with fine-grained insights into route usage and rider demographics, even though crowdsourced data often lacks the statistical robustness of random samples.
+
+In developing regions with incomplete traffic data, crowdsourcing has proven effective for identifying safety hotspots. For example, \citet{Telima:2023} used crowdsourced reports of near-misses and incidents to assess pedestrian risk areas in Cairo, demonstrating how spatial data analysis can prioritize high-risk areas for targeted interventions. This aligns with \cite{Liao:2019} findings that crowdsourcing can strengthen public engagement in urban planning, encouraging democratic, data-driven infrastructure decisions.
+
+\section{Instance Segmentation and Object Tracking}
+
+Instance segmentation and object tracking were central tasks in computer vision that enable detailed analysis by identifying, tracking, and classifying individual objects over time. Unlike traditional object detection, instance segmentation provides pixel-level precision, assigning a unique segmentation mask to each object, which makes it suitable for detailed urban infrastructure studies where individual instances of similar objects (e.g., cyclists, vehicles) need to be distinguished. According to IBM, this task goes beyond semantic segmentation by identifying each instance within a category, allowing for a more nuanced understanding of spatial relationships and object interactions \citep{IBM:InstanceSegmentation}. 
+
+Object tracking complements instance segmentation by maintaining continuity of detected objects across sequential frames, which was essential for capturing dynamic behaviors in urban cycling settings. In dense or complex environments, tracking ensures each object was consistently monitored over time, even amid partial occlusions or crowded scenes. This dual approach enables insights into cyclist interactions with other road users and infrastructure, providing essential data for urban planning and safety assessment.
+
+YOLOv11, as a single-stage model, combines the strengths of instance segmentation and real-time tracking. Its streamlined architecture was well-suited for urban environments, offering the efficiency needed for dynamic applications like cycling infrastructure monitoring. The model's unique structure and spatial attention mechanisms enhance its ability to focus on relevant scene elements, making it particularly effective for real-time object recognition in high-density scenarios \citep{Villegas2024:TrackingInUrbanSpaces, khanam2024yolov11overview}.
+
+Through instance segmentation and object tracking, this study aims to generate actionable data on urban cycling infrastructure and user interactions, bridging the gap between infrastructure design and real-world usage.
+ 
+\section{Geospatial Tracking}
+
+Geospatial tracking enables the detailed capture and analysis of spatial data, often using technologies like GIS, GPS, and crowdsourced mapping. In urban research, geospatial data provides valuable insights into mobility patterns, infrastructure usage, and interactions between users and their environment. By analyzing geospatial data, urban planners and researchers can identify key areas for infrastructure improvements and better understand user behaviors within specific spatial contexts.
+
+Geospatial Information Systems (GIS) were foundational to urban planning and transportation studies, providing tools for mapping, visualizing, and analyzing spatial data. GIS applications allow researchers to visualize route choices, assess safety hotspots, and understand traffic flows at various scales, enhancing data-driven decision-making for urban development \citep{Mutuli2024:GISTranspo}. For instance, GIS helps in pinpointing high-traffic areas and assessing accessibility to cycling infrastructure, which were critical for sustainable urban planning.
+
+Crowdsourced Geospatial Mapping, as seen with platforms like OpenStreetMap (OSM), expands the reach of geospatial data collection by enabling public participation. OSM leverages data contributed by users worldwide, offering a continuously updated, high-resolution map of infrastructure such as roads, bike lanes, and pedestrian areas. This crowdsourcing approach makes geospatial mapping more accessible and dynamic, allowing communities to document local infrastructure and share data relevant to their experiences. Studies emphasize that crowdsourced platforms like OSM play a vital role in democratizing geospatial data, allowing urban researchers to integrate real-time insights from the public for more accurate and locally relevant urban planning \citep{Mobasheri2020:OpensourceGeospatial}.
+
+In the context of this study, geospatial tracking was essential for mapping cyclist routes and associating them with specific infrastructure elements. This approach facilitates a deeper understanding of route choices and infrastructure usage, supporting the analysis of spatial patterns and identifying areas for potential improvement in cycling infrastructure.
+

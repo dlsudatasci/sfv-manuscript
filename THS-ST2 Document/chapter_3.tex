@@ -1,0 +1,199 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%   Filename    : chapter_3.tex 
+%
+%   Description : This file will contain your Theoretical Framework.
+%                 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\chapter{Theoretical Framework}
+\label{sec:theoframework}
+This chapter establishes the scientific and theoretical foundation for predicting short-form video (SFV) engagement. It explains the mechanics of behavioral engagement metrics, the architectural theory of predictive models, and the logic behind statistical validation choices.
+
+% \begin{itemize}
+
+% \item \url{https://link.springer.com/chapter/10.1007/978-1-4419-1454-5_12}
+% \item \url{https://link.springer.com/article/10.1007/s10972-015-9443-2}
+
+% \end{itemize}
+
+\section{Behavioral Engagement Metrics}
+
+Engagement is operationalized through two behaviorally grounded metrics: Engagement Continuation Rate (ECR) and Normalized Average Watch Percentage (NAWP). Instead of relying on raw, heavily biased popularity counts (such as total views or likes) \cite{wu2018beyond} or treating these as static dependent variables, ECR and NAWP serve as dynamic measures of user retention that capture the specific ``swiping'' behavior inherent to SFV consumption \cite{li2024delving}.
+
+\subsection{Engagement Continuation Rate (ECR)}
+
+ECR measures the effectiveness of a video's ``hook.'' In SFV platforms, users make split-second decisions to stay or scroll \cite{zannettou2024analyzing}. ECR quantifies the probability that a viewer remains engaged beyond the critical 5-second window \cite{li2024delving}.
+
+It is calculated by dividing the number of viewers who watch beyond the 5-second mark by the total number of viewers who started the video.$$ECR=\frac{\text{Viewers watching past 5 seconds}}{\text{Total initial viewers}}$$
+
+As an illustration of the formula, if an initial distribution exposes a video to $5000$ viewers, and $3200$ abandon the content within the first four seconds, the remaining $1800$ viewers represent the continuation baseline. The computation evaluates to $1800/5000 = 0.36$. An ECR of 36\% quantifies the exact probability that the opening multimodal elements are sufficiently captivating to interrupt the swiping behavior.
+
+% \begin{figure}[htbp]
+%     \centering
+%     \includegraphics[width=0.4\textwidth]{chap3/ECR_Example.png}
+%     \caption{5 Seconds of the video to get the key-frames needed.}
+%     \label{fig:ecr_example}
+% \end{figure}
+
+An ECR of 0.36 means the video has a 36\% chance of surviving the initial audience filter. If a model predicts a high ECR for a video, it tells the creator that the visual and audio elements in the opening frames are highly captivating  \cite{li2024delving}.
+
+An ECR prediction therefore estimates the probability that viewers continue watching beyond the initial five-second hook, making it a measure of the effectiveness of a video's opening in retaining audience attention.
+
+\subsection{Normalized Average Watch Percentage (NAWP)}
+
+NAWP measures the overall retention power of a video while mathematically neutralizing "duration bias." Naturally, a 10-second video will have a higher completion rate than a 60-second video. NAWP normalizes the watch time against the total duration so that videos of vastly different lengths can be evaluated on a level playing field \cite{li2024delving}.
+
+It is calculated by dividing the average watch time by the total duration of the video.$$NAWP=\frac{\text{Average Watch Time (seconds)}}{\text{Total Video Duration (seconds)}}$$
+
+Consider a creator testing two different formats. Video A is a short punchy clip lasting 15 seconds, and its analytics show an average watch time of 12 seconds. Video B is a longer educational clip lasting 60 seconds, with an average watch time of 30 seconds. Video A NAWP: $12/15=0.80$ (or 80\%) Video B NAWP: $30/60=0.50$ (or 50\%)
+
+Even though Video B accumulated more actual seconds of watch time per user (30s vs 12s), Video A was significantly more effective at retaining audience attention relative to its length. A high predicted NAWP from a model indicates strong overall content pacing and sustained viewer interest \cite{manic2024short}. A NAWP prediction estimates viewer retention over the video's entire duration by normalizing average watch time against total video length, making it a measure of sustained audience engagement throughout the video.
+
+\section{Feature Encoding and Preprocessing}
+
+\subsection{Z-Score Normalization}
+
+% Social Capital: Features like follower count are standardized via Z-score normalization ($\frac{x-\mu}{\sigma}$) to ensure large follower counts do not overwhelm other signal layers.
+
+When numerical features are fed into a model alongside neural embeddings, a scale mismatch can dominate the learning signal. A follower count measured in the thousands is a very different range than account age measured in days. A model would disproportionately favor the higher-magnitude feature, effectively masking the contribution of the smaller-scaled but potentially informative signals.
+
+Z-score normalization addresses this by transforming each raw feature value $x$ into a standardized score $z$ that expresses how many standard deviations it lies from the population mean:
+$$z = \frac{x - \mu}{\sigma}$$
+where $\mu$ is the mean and $\sigma$ is the standard deviation of the feature across the entire dataset. The operation centers the distribution at zero and rescales it to unit variance, projecting all features into a common, dimensionless space. This ensures that no single metadata feature overwhelms other signal layers solely because of its numeric magnitude, allowing the model to learn the relative importance of each feature on an equal footing.
+
+\subsection{Cyclical Encoding}
+
+% Temporal Context: Time and day are processed via sine/cosine cyclical encoding ($x_{sin} = \sin(\frac{2\pi x}{T})$) to ensure the model understands that 11:00 PM and 1:00 AM are temporally adjacent.
+
+Temporal features such as hour-of-day and day-of-week are inherently cyclical: 11:00 PM and 1:00 AM are only two hours apart, yet a naive integer encoding (e.g., 23 and 1) presents them to the model as 22 units apart. This artificial discontinuity at the cycle boundary distorts distance-based learning and can cause the model to treat temporally adjacent posting times as maximally dissimilar.
+
+Cyclical encoding resolves this by projecting each temporal value onto a unit circle using a pair of sine and cosine transformations:
+$$x_{\sin} = \sin\!\left(\frac{2\pi x}{T}\right), \qquad x_{\cos} = \cos\!\left(\frac{2\pi x}{T}\right)$$
+where $x$ is the raw temporal value (e.g., the hour 0-23) and $T$ is the period of the cycle (e.g., 24 for hours, 7 for days). The two resulting components together define a unique point on the unit circle for every position in the cycle, as shown in Figure \ref{fig:cyclical_encoding}. Because the circle has no endpoints, the Euclidean distance between any two encoded times faithfully reflects their true temporal proximity, preserving the wrap-around continuity that a scalar encoding destroys. This representation allows the model to learn posting-time effects such as peak audience windows without introducing boundary artifacts in the feature space.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.7\linewidth]{chap3/cyclical_encoding.png}
+    \caption[Cyclical encoding graph for a 24-hour day.]
+    {The 24 hours of the day projected onto a unit circle via sine and cosine encoding. Temporally adjacent hours (e.g., 23:00 and 00:00) remain geometrically close, eliminating the boundary discontinuity that a scalar representation would introduce.}
+    \label{fig:cyclical_encoding}
+\end{figure}
+
+\subsection{Video Representation via Keyframe Sampling}
+
+Before an LMM can evaluate a video, the continuous visual stream must be translated into a digestible format. Processing every single frame of a short-form video (which can contain hundreds or thousands of frames) is computationally prohibitive and exceeds the memory limits of current LMMs. To solve this, multimodal architectures utilize keyframe sampling. Instead of feeding the full video stream to the LMM, the process extracts a sparse, chronological sequence of representative still images—known as keyframes. Specifically, uniform keyframe sampling is used to capture the critical temporal dynamics of the content without processing redundant pixel data. These keyframes act as a highly efficient visual summary of the video's ``hook.'' These keyframes act as a compact visual summary of the video's content by capturing representative frames across its entire duration \cite{sun2025engagement}. In this study, the same video representation is used as input for both ECR and NAWP prediction. Although both prediction tasks share the same multimodal input, they differ in their target variables: ECR estimates the probability that viewers continue watching beyond the initial five-second hook, whereas NAWP estimates normalized viewer retention across the video's full duration.
+
+\section{Large Multimodal Models (LMMs)}
+
+Large Multimodal Models (LMMs) extend the reasoning capabilities of large language models (LLMs) by jointly processing visual, auditory, and textual inputs within a unified architecture \cite{ge2025lmm}. Unlike traditional multimodal pipelines that extract features through separate encoders before fusing them in a downstream regression head, LMMs internalize cross-modal alignment during pre-training, enabling them to perform semantic reasoning over raw media rather than over pre-computed embeddings \cite{sun2025engagement}. In the context of short-form video engagement prediction, an LMM can evaluate whether the visual composition, on-screen text, audio energy, and pacing of a video's opening seconds collectively form a compelling ``hook,'' a judgment that requires holistic understanding rather than isolated feature scoring.
+
+Because no single model simultaneously excels at temporal dynamics and static visual-semantic reasoning, a two-branch ensemble architecture is warranted, with each branch contributing a complementary analytical perspective. VideoLLaMA2 serves as the spatiotemporal and auditory backbone, interpreting motion dynamics and audio-visual synchrony across a sequence of keyframes, while Qwen2.5-VL operates as the visual-semantic reasoning branch, analyzing static frame content such as embedded text, visual composition, and caption alignment. The  following subsections detail the theoretical contribution of each model within the ensemble.
+
+\subsection{VideoLLaMA2}
+
+VideoLLaMA2 functions as a dual-branch multimodal architecture designed specifically to process interleaved spatial, temporal, and auditory signals \cite{cheng2024videollama}. Its architecture, as illustrated in Figure \ref{fig:videollama_arch}, is divided into a vision-language branch and an audio-language branch, both of which converge on a central Large Language Model (LLM) backbone as a language decoder for modality alignment and text generation.
+
+The vision-language branch processes a sequence of keyframes with $336\times336$ pixel resolution through an image-level CLIP encoder (ViT-L/14) to extract per-frame features. The extracted frame-level features are then processed by the Spatial-Temporal Convolution (STC) connector, which performs spatial-temporal representation learning to learn spatial features and relate features across the temporal dimension. The resulting video representation is projected through a linear layer to the embedding dimensionality of the language model.
+
+The audio-language branch facilitates audio understanding. Audio signals are transformed into spectrograms, which the BEATs audio encoder uses to extract audio features and temporal dynamics from these spectrograms. The extracted audio features are processed through an MLP block to align it to the embedding dimensionality of the LLM backbone.
+
+The projections from the vision-language and audio-language branch, alongside textual input, are fed to the LLM backbone, which serves as its language decoder. VideoLLaMA2 adopts the instruction-following LLMs of Mistral-Instruct, Mixtral-Instruct, and Qwen2-Instruct.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.85\textwidth]{chap3/videollama-archi.png}
+    \caption[Architectural overview of VideoLLaMA2.]
+    {Architectural overview of VideoLLaMA2. It makes use of two branches, a vision-language branch and an audio-language branch to process and extract features from an input video. Visual and audio features are projected into embeddings which are fed into an LLM backbone which combines those features with textual input.}
+    \label{fig:videollama_arch}
+\end{figure}
+
+VideoLLaMA2.1-7B-AV has a context length of 32K tokens, following the context window of its language decoder \cite{cheng2024videollama}.
+
+\subsection{Qwen2.5-VL}
+
+While VideoLLaMA2 handles temporal sequences via dual branches, Qwen2.5-VL operates as a highly integrated visual-semantic reasoning engine that works across diverse resolutions, aspect ratios, and temporal durations \cite{wang2024qwen2}. Architecturally, it utilizes a vision encoder to process visual inputs into raw patch features and a language model that functions as a language decoder.
+
+The visual backbone of Qwen2.5-VL is a Vision Transformer (ViT) modified to support naive dynamic resolution. This gives it the ability to process images at any input resolution and dynamically convert them into a variable number of visual tokens. 
+
+The language processing component of Qwen2.5-VL is based on the Qwen2 series of language models, which provides the autoregressive text generation capabilities that underlie the model's engagement prediction outputs.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.85\textwidth]{chap3/qwen-archi.png}
+    \caption[Conceptual overview of the Qwen2.5-VL architecture.]
+    {Conceptual overview of the Qwen2.5-VL architecture. Visual input goes through a vision encoder which is integrated to the textual input. This is fed to the Qwen2 language model which processes all the inputs and gives a textual output.}
+    \label{fig:qwen_arch}
+\end{figure}
+
+Qwen 2.5 VL 7B-Instruct has a context length of 32K tokens \cite{wang2024qwen2}. This is enough to understand 20 minutes or more videos.
+
+\subsection{Ensemble and Feature Integration Mathematics}
+To synthesize different feature layers and models, multimodal frameworks rely on mathematical fusion strategies. The first is a simple mean ensemble, which combines the predictions of independent Large Multimodal Models (LMMs) to produce a unified score. The ensemble prediction is calculated as the unweighted average of the models:
+$$Y_{ensemble}=\frac{1}{2}(\hat{y}_{VideoLLaMA2}+\hat{y}_{Qwen2.5-VL})$$
+Where $\hat{y}_{VideoLLaMA2}$ and $\hat{y}_{Qwen2.5-VL}$ represent the predicted scores of the respective models for a given target metric. The theoretical advantage of a mean ensemble is the reduction of variance by aggregating independent predictions. Conceptually, if one visual-language model evaluates a video's motion and predicts an ECR of 0.40, while a second model evaluates the text overlay and predicts an ECR of 0.50, the mean ensemble aggregates these into a single expected value of $0.45$. This creates a stabilized prediction that relies on multiple modalities rather than a single point of failure.
+
+When integrating non-content features (creator metadata and contextual factors) outside of the LMM prompt, an auxiliary model approach requires a weighted late fusion. This combines the multimodal content analysis with the auxiliary metadata analysis using a predefined weight, $\alpha \in [0,1]$:
+
+$$Y_{final}=\alpha \cdot Y_{LMM\_ensemble}+(1-\alpha)\cdot Y_{auxiliary}$$
+
+This equation allows a system to dynamically balance the contribution of the video content against the external factors influencing its distribution. Weighted late fusion allows a system to mathematically prioritize different streams of information. For instance, if a base model predicts a retention score of $0.60$ from video content alone, but an auxiliary metadata model predicts $0.80$ due to high social influence metrics, a weighted fusion mechanism reconciles the two. If the system is architected to prioritize content over metadata (e.g., assigning a weight of $\alpha = 0.7$ to the content), the integrated theoretical output is $(0.7 \times 0.60) + (0.3 \times 0.80) = 0.66$.
+
+
+
+\section{Statistical Validation}
+Demonstrating that one predictive model outperforms another requires more than a comparison of aggregate error metrics. Observed differences in performance may arise from sampling variability rather than a genuine advantage, particularly when evaluation sets are small or when the underlying error distributions violate common parametric assumptions. A rigorous theoretical framework for statistical validation must therefore address two concerns: (1) choosing a hypothesis test whose assumptions match the distributional properties of the data, and (2) controlling the accumulation of false-positive risk when multiple hypotheses are tested simultaneously.
+
+\subsection{Wilcoxon Signed-Rank Test}
+
+The Wilcoxon signed-rank test is a non-parametric hypothesis test for paired observations \cite{wilcoxon1945individual}. Given two matched measurements, the test computes the pairwise differences, ranks them by absolute magnitude, and compares the sum of positive ranks against the sum of negative ranks. Formally, for $n$ paired differences $d_i=x_{i,A} - x_{i,B}$, the test statistic $W$ is defined as:
+$$W = \sum_{i=1}^{n} \operatorname{sign}(d_i) \cdot R_i$$
+where $R_i$ is the rank of $|d_i|$ among all non-zero differences.
+
+Traditional tests like the t-test assume that the data follow a normal distribution. Engagement data on SFV platforms is notoriously skewed (a bimodal distribution of instant swipes vs. full watches) \cite{sun2025engagement}. The Wilcoxon test does not assume normality by operating on ranks rather than raw values, making it a theoretically sound basis for paired model comparison in engagement prediction contexts where a normal distribution cannot be guaranteed.
+
+The test outputs a $p$-value. If it falls below a chosen significance level $\alpha$ (typically 0.05), then the null hypothesis is rejected. This provides evidence that the observed gap is unlikely to have happened by chance.
+
+\subsection{Bonferroni Correction}
+
+When a family of $k$ hypothesis tests is conducted on the same dataset, the probability of committing at least one Type I error (a false positive) grows with $k$, even if each individual test is performed at a nominal significance level $\alpha$. This phenomenon, known as the multiple comparisons problem, inflates the family-wise error rate (FWER) and can lead to spurious claims of significance \cite{dunn1961multiple}.
+
+The Bonferroni correction is the most conservative and widely applied remedy. It controls the FWER by replacing the per-test threshold $\alpha$ with an adjusted threshold:
+$$\alpha_{\text{adjusted}} = \frac{\alpha}{k}$$
+By the union bound, this guarantees that the probability of any false rejection across all $k$ tests remains at most $\alpha$. For example, with three simultaneous comparisons and $\alpha = 0.05$, each individual test must achieve $p < 0.0167$ to be declared significant.
+
+The correction is particularly relevant in ablation studies and incremental feature evaluations, where multiple model variants are compared against a common reference. Without adjustment, the sheer number of comparisons increases the risk that at least one variant appears to offer a statistically significant improvement purely by chance. By adding the Bonferroni correction, only improvements whose evidence is strong enough to survive the penalty are accepted, thereby safeguarding the validity of conclusions drawn from multi-comparison experimental designs.
+
+\section{Evaluation Metrics and Error Calculation}
+To quantify the predictive accuracy of models against behavioral engagement metrics, predictive frameworks rely on standard error and correlation coefficients.
+
+\subsection{Absolute Prediction Error}
+The foundational measurement for per-video comparison is the absolute prediction error. For any given video $i$, the absolute error $e_i$ is defined as the magnitude of the difference between the ground-truth engagement value $y_i$ and the model's predicted value $\hat{y}_i$:
+
+$$e_i=\vert{}y_i-\hat{y}_i\vert{}$$
+
+This formulation is calculated independently for both the ECR and NAWP targets and serves as the primary input for the paired non-parametric statistical tests.
+
+Theoretically, absolute prediction error represents the strict mathematical distance between an observed empirical outcome and a theoretical prediction, disregarding the direction of the error. For instance, if the true engagement value of a piece of media is $0.75$ and a regression model predicts $0.60$, the absolute error is $0.15$. This metric provides a raw quantification of prediction inaccuracy.
+
+
+
+\subsection{Aggregate Evaluation Metrics}
+Beyond individual video errors, aggregate model performance is evaluated using three primary metrics:
+\begin{itemize}
+    \item Root Mean Squared Error (RMSE): Measures the average magnitude of the prediction errors, heavily penalizing larger discrepancies.
+    \item Spearman Rank Correlation Coefficient (SRCC): Assesses the ranking accuracy, determining how well the model orders videos from lowest to highest engagement.
+    \item Pearson Linear Correlation Coefficient (PLCC): Measures the linear agreement and consistency between the predicted and actual scores.
+\end{itemize}
+
+
+\subsection{Final Composite Score}
+Because a model must balance both absolute precision and relative ranking consistency to be useful in general predictive applications, a weighted composite metric is utilized. The Final Score prioritizes rank correlation while maintaining the importance of linear agreement:
+
+$$\text{Final Score} = 0.6 \times SRCC + 0.4 \times PLCC$$
+
+This composite score provides a single, balanced value to evaluate overall prediction utility, particularly when ranking consistency is paramount for pre-publication decision support.
+
+The rationale for a composite score is to mathematically balance ranking utility with linear precision. If an algorithm achieves an SRCC (ranking accuracy) of $0.80$ and a PLCC (linear accuracy) of $0.70$, a composite scoring function utilizing a $60/40$ split calculates a final unified metric of $(0.6 \times 0.80) + (0.4 \times 0.70) = 0.76$. This composite value allows for the comparison of models that might otherwise excel in one statistical area but fail in another.
+

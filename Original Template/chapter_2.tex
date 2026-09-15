@@ -1,0 +1,181 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%   Filename    : chapter_2.tex 
+%
+%   Description : This file will contain your Review of Related Literature.
+%                 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\coo}{\ensuremath{\mathrm{CO_2}}}
+\newcommand{\cooo}{CO\textsubscript{2}}
+
+\chapter{Review of Related Literature}
+\label{sec:relatedlit}
+
+The increasing popularity of cycling in Metro Manila, evidenced by the "bike boom" during the COVID-19 pandemic \citep{Younes:2023}, necessitates a comprehensive assessment of bike lane accessibility and safety to sustain this positive trend. This chapter explores the existing methods of data collection for bike lane assessment, the potential of crowdsourcing for gathering subjective user data, and the current state of bike lane infrastructure in the Philippines. By investigating these areas, this chapter aims to identify gaps in current approaches and propose a more comprehensive crowdsourcing framework to assess cycling infrastructure in Metro Manila.
+
+
+\section{Collecting Cycling Related Data}
+
+
+Existing research on bike lane assessment has often relied on traditional data collection methods, such as surveys and observational studies, or utilized readily available data sources. \citet{Younes:2023} conducted surveys to examine changes in cycling behavior during and after the pandemic, revealing that infrastructure changes significantly influenced cycling habits.  Additionally, \citet{Gaspay:2022} used surveys to examine cycling behaviors and mode shift patterns in Metro Manila, providing valuable insights into cyclist demographics, trip characteristics, and preferences.  They mention that there was a lack of comprehensive and continuous monitoring efforts to understand cyclists, pedestrians, and their needs, especially with the increase in cycling infrastructure. However, surveys often lack real-time data and may not fully capture the on-the-ground experiences of cyclists. 
+
+\citet{Pulugurtha:2015} collected police crash data and average daily traffic data from the Charlotte Department of Transportation. They also extracted data on street-level features, such as speed limits, lane widths, and the number of driveways and intersections, from geospatial databases. This data-driven approach allowed them to analyze the relationship between infrastructure and crashes, but it did not capture the subjective experiences of cyclists. \citet{Daraei:2021} similarly used a data-driven approach involving bike accident data and street-level features from OpenStreetMap to model biking safety. While these methods provide valuable insights into objective safety measures, they overlook the subjective experiences of cyclists, such as their perceived safety or comfort levels on different bike lanes.
+
+In addition to quantitative data collection, qualitative research offers a deeper understanding of the subjective experiences of cyclists. For instance, the study by \citet{Pearson2024} investigates the needs of “Interested but Concerned” potential cyclists through interviews, revealing that safety concerns and infrastructure inadequacies discourage many from cycling. This group consistently preferred protected bike lanes and expressed discomfort with intersections, speed differentials, and shared spaces with motorized traffic. Pearson's findings emphasize the importance of capturing subjective factors, such as perceived safety and comfort, which were crucial in designing inclusive cycling infrastructure that encourages wider adoption. Integrating such qualitative insights can provide a more nuanced view of cyclists' needs, complementing traditional quantitative approaches. 
+
+\citet{Veghel:2024} used GPS data from a bike-sharing system to quantify the impact of cycling infrastructure investments on ridership. Although this approach offers valuable insights into usage patterns, it does not capture the reasons behind cyclists' route choices or their experiences on specific bike lanes. The study also acknowledges limitations due to data loss and the short study period, emphasizing the need for continuous and more comprehensive data collection. Similarly, \citet{Chung:2024} utilized GPS data to understand route choice preferences of cyclists in Seoul, but this approach does not offer insights into the reasons behind those choices, such as safety concerns or perceived accessibility.
+
+Moreover, \citet{Silva:2023} conducted an observational study comparing cyclist interactions on streets with on-street bike lanes versus sidewalk bike lanes. They found that sidewalk bike lanes had more frequent, minor interactions between cyclists and pedestrians, while on-street bike lanes had fewer but potentially more severe interactions with vehicles. This highlights the trade-offs between different bike lane designs and the need to consider both objective safety measures and the subjective experiences of cyclists when evaluating bike lane effectiveness.
+
+Furthermore, \citet{Karakaya:2020} introduced the SimRa platform, a crowdsourcing tool that utilizes smartphone sensors to collect data on near-miss incidents. This approach demonstrates the potential of crowdsourcing for gathering safety-related data, but it relies on specific technology and may not capture the full range of cyclist experiences or the reasons behind their choices.
+
+In summary, integrating crowdsourcing into bike lane assessment addresses the limitations of traditional methods by capturing both objective and subjective data from cyclists. This approach provides a more comprehensive understanding of bike lane accessibility and safety, leading to better-informed decisions and improvements in cycling infrastructure.
+
+
+\section{Crowdsourcing Experiences}
+
+Crowdsourcing has emerged as a powerful tool for collecting subjective user experiences across various sectors, including urban planning and transportation research \citep{Epifantsev:2024, Misra:2014}. Platforms like Yelp and TripAdvisor leverage user-generated content to offer insights into customer satisfaction and service quality, demonstrating the potential of crowdsourcing to gather detailed and subjective feedback that traditional methods might miss \citet{Epifantsev:2024}. In urban planning, \citet{Nelson:2020} emphasize the growing importance of bicycling in cities and the need for data to inform effective planning and policies. They highlight the limitations of traditional data collection methods and introduce crowdsourcing as a potential solution to fill data gaps in bicycling research. Platforms such as FixMyStreet and SeeClickFix enable residents to report local issues, providing real-time data that reflects the community's concerns and experiences. This approach highlights the effectiveness of crowdsourcing in capturing nuanced insights into urban environments, which were crucial for informed decision-making and policy development \citep{Misra:2014}.
+
+Crowdsourcing platforms, like those discussed in the study by \citet{Cheng:2018}, have demonstrated their effectiveness in various domains, including data collection and analysis. By leveraging the power of the crowd, these platforms can gather large-scale data quickly and cost-effectively. In the context of bike lane assessment, crowdsourcing has the potential to provide valuable insights into the actual usage patterns and safety concerns of cyclists. However, existing crowdsourcing platforms were often designed for simple, well-defined tasks and may not be suitable for capturing the complex and subjective nature of cyclist feedback.
+
+In transportation research, crowdsourcing has also been utilized to collect data on public transit experiences, traffic conditions, and pedestrian safety. These studies have shown that crowdsourced data can reveal nuanced insights into user experiences, such as perceived safety and comfort, that were not easily obtainable through objective measures alone. \citet{Nelson:2020} discuss various crowdsourced data sources, including fitness apps, GPS data, bike share programs, web-map tools, OpenStreetMap, and social media, demonstrating how this data was used in research on bicycling ridership, safety, infrastructure, and public attitudes. This underscores the suitability of crowdsourcing for gathering rich, qualitative data on cyclists' experiences with bike lanes, contributing to safer and more efficient transportation networks \citep{Misra:2014}.
+
+However, despite the potential of crowdsourcing, existing bike lane assessment platforms often fall short in capturing the subjective experiences of cyclists. These platforms prioritize quantitative data, such as GPS coordinates, speed, and distance traveled, over qualitative feedback that captures the nuanced experiences of cyclists. While platforms like SimRa collect data on near-miss incidents through smartphone sensors \citep{Karakaya:2020}, they primarily focus on objective safety metrics and may not capture the full range of cyclist experiences or the reasons behind their choices. While objective measures were valuable, they fail to fully represent the nature of cycling experiences, including perceptions of safety, comfort, convenience, and overall satisfaction with bike lane infrastructure. This gap highlights the need for a specialized crowdsourcing framework tailored to the subjective experiences of cyclists.
+
+To address this gap, a specialized crowdsourcing framework tailored for bike lane assessment was necessary. This framework could incorporate features like those proposed in \citet{Cheng:2018}, such as task scheduling and worker notification, to ensure efficient and timely data collection. However, it should go beyond objective measures and actively solicit subjective feedback from cyclists through surveys, ratings, and open-ended responses. By incorporating both quantitative and qualitative data, this framework can provide a more comprehensive and user-centered assessment of bike lane infrastructure in Metro Manila.
+
+\section{Assessment of Bike Lane Safety and Accessibility }
+
+Traditional methods for assessing bike lane safety and accessibility, such as accident reports, user surveys, and observational studies, were widely used but offer limited insight into the dynamic experiences of cyclists. These methods generally focus on physical infrastructure and crash data, which, while important, do not capture the full spectrum of conditions cyclists face daily. For instance, accident reports typically indicate the frequency of incidents but fail to provide contextual details about contributing factors like obstacles, road design, or interactions with other road users. This limitation was evident in studies like \citet{Pulugurtha:2015}, who compared crash data across road segments with and without bike lanes but could not capture cyclist interactions or near misses, which were critical to understanding real-time safety risks.
+
+Additionally, \citet{Lusk:2015}  highlight that standard police report templates lack essential data points, such as specific impact locations on bikes and vehicles, reducing the potential for a comprehensive analysis of crash causes. To address this, researchers like \citet{Poulos:2017} advocate for incorporating near-miss data, which offers a richer view of safety risks perceived by cyclists, especially in incidents involving motor vehicles. By collecting data on near misses, safety improvements can be identified before serious crashes occur, providing a proactive approach to infrastructure planning.
+
+The reliance on static data in traditional bike lane assessment methodologies highlights a critical gap in understanding real-time cyclist experiences. By depending solely on generalized data points like road width or traffic volume, current studies often overlook situational details, such as sudden obstructions or aggressive driving behaviors, that directly affect cyclist safety. For example, \citet{Dondi:2011} emphasize the need for a context-sensitive approach to bike lane design, suggesting that safety and usability can only be optimized by considering social and environmental surroundings alongside physical attributes. Similarly, \citet{Zochowska:2022} demonstrate the value of a GIS-based framework to evaluate spatial integration and connectivity of bike infrastructure, uncovering specific improvements that might not be identified through static data alone.
+
+Moreover, studies using GPS and trajectory data reveal critical insights into cyclist behavior and preferences that static assessments lack. For instance, \citet{Liu:2022} use trajectory data to model cyclists' route choices dynamically, enabling urban planners to prioritize bike lanes based on real usage patterns rather than fixed assumptions. Likewise, \citet{Yuan:2023} developed a data-driven GPS framework that estimates bicycle delays at intersections, providing planners with actionable data to address traffic-related bottlenecks for cyclists. These studies collectively underscore the limitations of traditional, static methods and advocate for richer, context-sensitive data collection approaches to better capture the complexities of urban cycling.
+
+
+\subsection{Leveraging Video Data for Enhanced Bike Lane Assessment}
+
+Incorporating video data from cyclists presents a significant opportunity to address the limitations of traditional, static data sources. Unlike static data, video footage provides continuous, contextual information that reveals not only the physical state of bike lanes but also real-time interactions with other road users and obstacles. Video-based methodologies have been successfully applied in various high-density and dynamic settings, such as cycling events and shared spaces, where traditional counting methods struggle to capture accurate data. For example, \citet{Zaki:2016} demonstrated that automated video collection can effectively replace manual counts, accurately capturing traffic flow and density in dense environments. Similarly, studies focused on pedestrian safety, such as those by \citet{Xu:2018} and \citet{Madigan:2021}, illustrate how video data can capture nuanced behaviors and interactions that were often overlooked by conventional methods, making it ideal for analyzing complex, real-time road user interactions in cycling contexts.
+
+This approach enables a more nuanced analysis of bike lane conditions by capturing critical, situational details like cyclists' responsiveness to sudden hazards, the frequency of roadblock encounters, and interactions with vehicles and pedestrians. For instance, \citet{Li:2021} and \citet{Essa:2018} show how video can record interactions between cyclists and pedestrians, tracking compliance rates with safety protocols and detailing safety levels in shared urban spaces. Additionally, \citet{Kronprasert:2021} applied video analysis to assess conflict types and collision risks at intersections, highlighting how video data helps identify high-risk areas that require targeted interventions.
+
+In leveraging video data, urban planners gain actionable insights that were difficult to obtain from static data sources like surveys or crash reports. By analyzing video footage with advanced technologies, such as computer vision, infrastructure assessments can scale to large areas, as demonstrated by \citet{Tripodi:2020}, who used video to monitor road quality and categorize safety risks across extensive road networks. These studies reinforce the value of video data as a scalable, efficient tool for urban planning and safety management, providing a holistic view of road conditions that static methods fail to capture.
+
+
+\subsection{The Rise of Cyclist Video Vlogs and Their Potential Applications}
+
+With the increasing popularity of video vlogging among cyclists, a new source of user-generated data was emerging, capturing daily cycling experiences in urban environments. These video vlogs provide real-time documentation of road conditions and user behavior, offering a level of granularity that surpasses traditional data collection methods. Studies like \citet{Zaki:2016} demonstrate the effectiveness of video analysis for collecting cyclist data in high-density environments, which can be adapted in Philippine urban settings to analyze traffic interactions and assess infrastructure quality. Additionally, vlogs can capture cyclist maneuver patterns, speeds, and reactions to infrastructure discontinuities, as shown by Niaki et al. (2018) in their analysis of cyclist behavior at points where infrastructure was lacking or inconsistent \citep{Zaki:2016, Niaki:2018}.
+
+Video vlogs also provide a scalable solution for assessing cyclist safety behaviors. \citet{Li:2014} used computer vision techniques on video footage to automatically detect helmet-wearing habits among cyclists, highlighting how such methods can generate safety data on a large scale. Beyond safety, \citet{Bourassa:2023} demonstrated that video, combined with GPS, can assess environmental features like urban greenery along cycling routes, offering unique insights into infrastructure quality and environmental conditions that satellite imagery often misses \citet{Li:2014, Bourassa:2023}. 
+
+In regions like the Philippines, where cycling infrastructure remains underdeveloped, \citet{Bakker:2018} underscore the value of these firsthand, visually rich accounts of cyclists' experiences. Vlogs can highlight infrastructure gaps, support advocacy, and drive planning efforts toward safer cycling conditions.
+
+Vlogs reveal essential insights into cyclists' experiences, including:
+\begin{itemize}
+    \item Cyclists' perceptions and responses to infrastructure features such as lane width, signage, and separations.
+    \item Types of road hazards encountered, from minor debris to significant obstacles.
+    \item Interactions between cyclists and other road users, capturing behaviors that could compromise safety.
+\end{itemize}
+
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{BikeLaneBlocked2.png}
+    \caption{Example of a cyclist avoiding road obstructions, illustrating common hazards encountered during rides (SinongSiklista, 2024).}
+    \label{fig:cyclist_avoiding}
+\end{figure}
+
+In Figure~\ref{fig:cyclist_avoiding}, captured from a YouTube video by a Filipino cyclist vlogger, the cyclist was shown riding outside the designated bike lane to avoid multiple obstructions. The bike lane was occupied by various road users, including a pedestrian walking within the lane, a motorcyclist making a brief stop, and tricycle drivers waiting for passengers. This scene highlights the frequent challenges cyclists face on urban roads in the Philippines, where bike lanes were often shared or misused, creating safety risks and forcing cyclists into active traffic lanes. Such situations underscore the need for dedicated, well-maintained cycling infrastructure that supports safer, unobstructed routes for cyclists.
+
+Compared to traditional observational studies, video vlogs offer unparalleled granularity and continuity, creating a comprehensive picture of urban cycling challenges. \citet{Zaki:2016} further validate the use of automated video data collection to analyze traffic flow, including lane changes and speeds, which often exceed the capabilities of manual observation. This transition to video-based data can redefine how urban planners understand and address the needs of cyclists, integrating community-sourced insights for informed planning \citep{Zaki:2016, Khazukov:2020}.
+
+
+\subsection{Applications of Video Data in Cycling Infrastructure Assessment}
+
+Video data from cyclists offers invaluable insights into the effectiveness and safety of current bike lane designs. Specifically, video analytics can capture critical real-time information, such as near-miss events with vehicles or pedestrians, providing a more comprehensive understanding of safety risks. For instance, \citet{Li:2023} developed the Cyc-CP benchmark to detect "close pass" near-misses from video footage, using deep learning to identify and categorize close-pass incidents with motor vehicles. This tool has demonstrated how video analysis can quantify risk levels based on direct interactions between cyclists and other road users \citep{Li:2023}. 
+
+Video analysis also allows for the continuous assessment of infrastructure quality, identifying issues such as pavement roughness or inconsistent maintenance across different bike lanes. \citet{Nunez:2018} illustrate this approach by combining video recordings with vertical acceleration data to assess pavement conditions, categorizing roughness levels across surfaces like asphalt and concrete. Such integration of video and sensor data provides a practical method for ensuring that cycling paths meet safety and comfort standards, encouraging ongoing maintenance efforts.
+
+Additionally, video data captures complex behavioral patterns among cyclists and other road users, offering detailed insights into interactions within shared spaces. Studies like those by \citet{Alsaleh:2020} and \citet{Kaparias:2015} reveal how video can track nuanced behaviors in mixed traffic environments, such as overtaking maneuvers or pedestrian-cyclist interactions. By analyzing these behaviors, urban planners can better design infrastructure that accommodates the diverse needs of road users, enhancing safety and flow in shared spaces \citep{Alsaleh:2020, Kaparias:2015}.
+
+Automated processing techniques, such as instance segmentation, can be used to make video data actionable on a large scale. Instance segmentation models, such as YOLACT and YOLO, enable the identification and categorization of various elements within video frames, such as road signs, lane markers, and road users, allowing urban planners to efficiently analyze extensive footage. \citet{Li:2021} demonstrated YOLACT's effectiveness in real-time traffic scene segmentation by modifying its architecture to suit embedded systems, achieving efficient processing speeds necessary for large-scale traffic monitoring \citep{Li:2021, Zhang:2020}. Other studies, like \cite{Neven:2019}, further emphasize the value of instance segmentation in diverse traffic contexts, showcasing its adaptability to both urban and specialized infrastructure assessments.
+
+By utilizing video data with advanced analytics, urban planners can transform raw footage into actionable insights, informing infrastructure improvements that directly enhance the safety and accessibility of cycling environments. This approach underscores the role of video data as a versatile, scalable tool for urban planning and real-time safety management, offering comprehensive visibility into the operational conditions and challenges cyclists face.
+
+\section{Instance Segmentation}
+Instance segmentation was a pivotal task in computer vision that merges object detection and semantic segmentation to identify and delineate individual object instances within images. This technology has broad applications across various fields, including robotics, healthcare, and intelligent driving \citet{Sharma2022}. The evolution of instance segmentation techniques has transitioned from traditional methods to advanced approaches involving deep learning, reinforcement learning, and transformer-based models \citet{Sharma2022}. One of the primary challenges in instance segmentation was managing occlusions and distinguishing between multiple instances of the same object class \citet{Hafiz2020}. To address these challenges, innovative techniques such as recurrent neural networks with spatial memory have been proposed, enabling sequential object detection and segmentation \citet{RomeraParedes2015}. As the field advances, researchers continue to explore new architectures and training methodologies to enhance accuracy and efficiency across diverse datasets and real-world applications \citet{Tian2021, Hafiz2020}.
+
+
+
+\subsection{Instance Segmentation Modelling for Processing Video Data}
+
+To improve cyclist safety, assessing road conditions was crucial, but gathering real-time, on-the-ground data can be challenging. Utilizing existing video data sources, like YouTube videos from cyclist perspectives, presents a cost-effective, scalable alternative. By analyzing this publicly available data, we can identify and evaluate hazards across varied urban environments without the need for dedicated monitoring equipment. Instance segmentation offers a robust solution for this task, as it can detect, classify, and track different road objects, from vehicles to static obstacles, that cyclists encounter. Models like Mask R-CNN \citep{He:2017} provide pixel-accurate segmentation in still frames, but adapting these models for video requires further development to ensure temporal consistency and tracking accuracy, as seen in \citet{ZhangY:2016} work on instance-level segmentation for continuous frames. Road-specific adaptations, including multi-scale attention mechanisms, enhance the model's ability to capture smaller details—critical for identifying subtle but potentially hazardous objects like debris or cracks \citep{PlosOne:2022}.
+
+Through instance segmentation applied to video data, particularly with road-specific category prioritization as demonstrated by \citet{Wang2022}, it was possible to continuously monitor conditions on cycling lanes. This allows for the identification of both stationary and transient hazards and the generation of actionable safety insights over time, contributing valuable data to urban planners aiming to improve infrastructure for cyclists in urban Philippine environments.
+\subsection{Types of Instance Segmentation Techniques}
+Instance segmentation techniques have evolved significantly, driven by the need for precise and efficient image segmentation across complex scenes. These techniques fall into three primary categories, each leveraging different model architectures to achieve distinct segmentation capabilities.
+
+\subsubsection{Mask R-CNN}
+Mask R-CNN, an extension of Faster R-CNN, was among the most widely used techniques for instance segmentation due to its accuracy in object detection combined with pixel-level segmentation \citep{He:2017}. Mask R-CNN works by generating bounding boxes around detected objects and applying segmentation masks within these boxes, which enables precise delineation of each object instance. While highly accurate, Mask R-CNN's two-stage architecture can be computationally intensive, making it less suitable for real-time applications without further optimization.
+
+\subsubsection{YOLO-based Segmentation Models}
+YOLO (You Only Look Once) models, initially designed for object detection, have been adapted for instance segmentation to meet the demands of real-time processing. YOLO models segment images in a single pass, making them significantly faster than two-stage approaches like Mask R-CNN. The latest versions, such as YOLOv8m, have shown high accuracy in applications like vehicle detection on bicycle paths, making them particularly advantageous for video data applications, including continuous monitoring of road hazards \citep{GarciaPajuelo2024}. Studies highlight YOLO's strengths in both speed and detection ability across applications such as traffic monitoring and pedestrian detection \citep{Sumit2020}.
+
+\subsubsection{Transformer-based Segmentation Models}
+Recent advancements in transformer-based models, such as DETR (DEtection TRansformers), have introduced new capabilities for instance segmentation by leveraging self-attention mechanisms. These models were highly effective at handling complex scenes with multiple overlapping objects, as they model long-range dependencies within images, providing greater accuracy in distinguishing individual instances even in crowded environments \citep{Carion2020}. However, transformer-based models typically require large datasets and high computational resources, making them more suited to applications where segmentation precision was prioritized over speed.
+
+\subsection{Comparison of Image Segmentation Models}
+
+To assess the effectiveness of different instance segmentation techniques, a comparative analysis based on accuracy, speed, and computational efficiency was essential, especially when evaluating models for real-time applications like urban road monitoring. Table \ref{table:segmentation_comparison} provides a summary of key characteristics of Mask R-CNN, YOLO-based segmentation, and DETR models.
+
+\begin{table}[H]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{|l|c|c|c|}
+\hline
+\textbf{Model} & \textbf{Accuracy} & \textbf{Processing Speed} & \textbf{Computational Efficiency} \\
+\hline
+Mask R-CNN & High & Moderate & High computational cost \\
+YOLO-based Segmentation & Moderate-High & High (real-time) & Moderate computational cost \\
+Transformer-based (DETR) & Very High & Low-Moderate & Very high computational cost \\
+\hline
+\end{tabular}%
+}
+\caption{Comparison of instance segmentation models in terms of accuracy, processing speed, and computational efficiency.}
+\label{table:segmentation_comparison}
+\end{table}
+
+
+To assess the performance of various YOLO architectures for instance segmentation, we compare key model attributes, including model size, parameters, and FLOPs (Floating Point Operations per second). This information was valuable for selecting a model that balances accuracy with computational efficiency, particularly for applications requiring real-time processing.
+
+\begin{table}[H]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{|l|c|c|c|c|}
+\hline
+\textbf{Models} & \textbf{Image size (pixel)} & \textbf{Model size (MB)} & \textbf{Parameters (M)} & \textbf{FLOPs (G)} \\
+\hline
+YOLOv4-tiny & 416 & 23 & 5.88 & 6.8 \\
+YOLOv4 & 416 & 250.10 & 61.6 & 59.7 \\
+YOLOv5n & 640 & 3.74 & 1.9 & 4.5 \\
+YOLOv5m & 640 & 41.17 & 21.2 & 49 \\
+YOLOv6Lite-L & 320 & 2.48 & 1.09 & 0.87 \\
+YOLOv6n & 640 & 10.21 & 4.7 & 11.4 \\
+YOLOv7-tiny & 640 & 11.98 & 6.05 & 13.2 \\
+YOLOv7 & 640 & 73.06 & 37.22 & 105.2 \\
+YOLOv8n & 640 & 6.07 & 3.2 & 8.7 \\
+YOLOv8m & 640 & 50.78 & 25.9 & 78.9 \\
+\hline
+\end{tabular}%
+}
+\caption{Comparison of YOLO architectures in terms of image size, model size, parameters, and FLOPs \citep{GarciaPajuelo2024, Sumit2020}.}
+\label{table:yolo_comparison}
+\end{table}
+
+
+The table above (\ref{table:yolo_comparison}) illustrates the trade-offs between different YOLO models. For instance, smaller models such as YOLOv4-tiny and YOLOv6Lite-L have lower FLOPs and fewer parameters, making them ideal for applications with limited computational resources. However, models like YOLOv7 and YOLOv8m offer higher parameter counts and FLOPs, which were suitable for tasks where higher accuracy was required despite increased computational demands.
+
+From the comparison, Mask R-CNN provides high accuracy suitable for static image analysis, while YOLO-based models, due to their real-time capabilities, were better suited for video-based applications like hazard detection in cycling lanes. Transformer-based models, despite their higher accuracy, were less practical for real-time deployment without substantial computational resources.

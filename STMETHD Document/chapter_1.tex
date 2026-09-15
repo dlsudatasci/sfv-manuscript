@@ -1,0 +1,292 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%   Filename    : chapter_1.tex 
+%
+%   Description : This file will contain your Research Description.
+%                 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{Introduction}
+\label{sec:intro}    %--note: labels help you with hyperlink editing (using your IDE)
+
+% This chapter builds the motivation for the conduct of the research through a description of the background of the study or the current state of technology. This is followed by the research objectives, the scope and limitations, and significance of the research. The chapter ends with the research methodology describing the different activities to be conducted to achieve the goals of this research.
+
+
+%%
+%% --- 1.1 Background of the Study --- %%
+%%
+
+\section{Background of the Study}
+\label{sec:overview}
+
+%
+%   NOTE: You have to delete/replace the unnecessary paragraphs with your own text.
+%
+
+% This section gives the reader an overview of the specific technology or field in the international or local setting. The information regarding the technology or field should be contemporary and not
+% based on outdated sources. Discussion must not be too technical or too detailed.
+
+% Follow the inverted pyramid to describe each of the following. Allocate one (1) paragraph per level in the pyramid. 
+
+% % Describe the research area
+
+% Research area ...
+
+% % Describe the domain (where will you apply the topic)
+
+% Domain of application or specific research sub-field ...
+
+% % Give a synthesis of previous work
+
+% Synthesis of previous studies...
+
+% % State the problem and the research question
+
+% Paragraph containing the Problem Statement or the Research Question.
+ 
+% This section ends with a discussion on the problem/s faced by or that still exist in the specific technology or field (e.g., limitations of existing software or algorithms). It should not contain your research objectives or goal; instead, the problem statement
+% would lead to the research objectives to be stated in 1.2.
+
+In recent years, short-form video (SFV) platforms, specifically TikTok, YouTube Shorts, and Instagram Reels, have emerged as dominant mediums for digital consumption and user engagement \cite{faverio_2025_teens}. These platforms attract billions of views daily and have reshaped how users create, share, and interact with online media content \cite{gottfried_2025_americans, lafayette_2025_the}. As of 2025, YouTube Shorts alone averages over 200 billion daily views, with over 75\% of YouTube views coming from this SFV platform \cite{cobb_2025_youtube, cassillo_2026_tube, violot2024shorts}. This shift reflects a massive change in how audiences engage with online media.
+
+Given these trends, SFV platforms are no longer just spaces for entertainment; they have become the primary stage for the global ``creator economy,'' now valued at \$254.4 billion \cite{zoting_2026_creator}. Many individuals rely on SFVs not only for personal expression and branding but also as a critical source of income and digital livelihood \cite{violot2024shorts, varanasi_2025_tiktok}. However, the fast-paced and highly competitive nature of these platforms means that success is largely driven by fleeting user attention. On TikTok, studies indicate that approximately 71\% of viewers decide within the first few seconds whether to continue watching or swipe away \cite{eyesee_2023_tap}. In this environment, traditional metrics, such as watch time, likes, and shares, are not just indicators of engagement, but critical signals that determine whether content gains visibility.
+
+To sustain user interest, SFV platforms rely on algorithm-driven content distribution systems that expose videos to audiences based on early engagement patterns \cite{covington2016deep}. For content creators, this means that early engagement can strongly influence visibility and growth, while weak initial responses may limit reach regardless of content quality. This situation makes engagement prediction an important research area, particularly for helping creators understand how their content may perform before publishing. A central challenge in this context is the cold-start scenario, where newly uploaded videos have little to no prior interaction data \cite{li2024delving}. Without early signals such as views or watch time, it is difficult to estimate a video’s potential performance, making pre-publication decision-making uncertain \cite{lika2014facing}.
+
+To address this challenge, prior research has explored various computational approaches for predicting engagement under limited data conditions. Early studies relied on collaborative filtering and popularity-based indicators, which were limited by their dependence on historical interaction data \cite{he2017neural, zhou2010impact}. More recent work has shifted toward multimodal learning approaches, which analyze features directly extracted from videos, including visual, audio, and textual elements \cite{li2024delving, wu2018beyond}. The availability of large-scale datasets, such as SnapUGC and YouTube engagement datasets, has enabled the development of models that examine thumbnails, motion patterns, captions, and sound cues to estimate engagement even before significant user interaction occurs \cite{li2024delving, wu2018beyond}. Researchers have also proposed alternative engagement metrics, such as Normalized Average Watch Percentage (NAWP) and Engagement Continuation Rate (ECR), to provide more nuanced measures beyond basic popularity indicators \cite{li2024delving}.
+
+While these advances have improved prediction accuracy, most existing studies remain platform-centered. These models primarily support large-scale content distribution or post-upload performance analysis, rather than directly assisting content creators. In practice, creators often rely on intuition, trends, or trial-and-error when deciding what content to publish. Even with data-driven modeling techniques, there are still limited tools that help creators estimate potential engagement before uploading, leaving a significant gap in pre-publication decision-making.
+
+Furthermore, engagement is influenced not only by video content but also by creator-related and contextual factors. Prior work highlights the role of creator characteristics, such as follower count, account age, and audience familiarity, in shaping engagement outcomes \cite{peng2024untangling, sadeque2019predicting, zannettou2024analyzing}. Social influence and creator-audience relationships affect how users respond to new uploads. In addition, contextual elements, including posting time and audience activity patterns, can influence engagement likelihood, as videos released during peak activity periods tend to receive higher reactions \cite{kanuri2018scheduling, manic2024short, spasojevic2015post}. Despite this evidence, creator and contextual factors are not consistently integrated into engagement prediction models, particularly in early-stage scenarios where interaction data is limited.
+
+Given these gaps, there is a clear need for an engagement prediction approach that supports content creators before publication. While prior studies have demonstrated the value of multimodal content features and separately highlighted creator-related and contextual factors, these elements are rarely integrated into a unified framework designed for pre-upload decision-making. As a result, content creators still lack reliable tools to estimate how their videos might perform during the critical cold-start stage, where early engagement determines visibility and reach. \hl{This study therefore addresses the problem of developing a comprehensive, creator-oriented engagement prediction model that integrates multimodal, creator-related, and contextual features to help creators gauge potential engagement before posting short-form videos. Specifically, it seeks to answer the question: \textbf{How does integrating creator-related and contextual features alongside multimodal content signals improve pre-publication engagement prediction accuracy for short-form videos?}}
+
+%%
+%% --- 1.2 Research Objectives --- %%
+%%
+
+\section{Research Objectives}
+
+% This subsection states the over--all goal that must be achieved to answer the problem. Address the following: Given your research challenge or opportunity, how do you intend to solve it? What is the main outcome of your research? What kind of contribution do you want to achieve?
+
+% The \textbf{general objective} is broken down into three or more specific objectives. The \textbf{specific objectives} are relatively smaller objectives that help you attain your general objective. You can formulate your specific objectives based on your running questions about the project. For example, the group does not have a good picture yet of the different conversation patterns between humans that can be mimicked by conversational agents. A specific objective can be "to identify different human-human conversation patterns." These objectives must be specific, measurable, attainable, realistic, and time-bounded.
+
+% Reviewing related literature, studying a particular programming language or development tool (e.g., to study Windows/Object-Oriented/Graphics/C++ programming), and documentation to accomplish the general objective is inherent in all thesis projects and, therefore, must not be included here.
+
+
+% \begin{comment}
+% %
+% % IPR acknowledgement: the following sentences and examples are from Ethel Ong's slides 
+% %     on Research Objectives
+% %
+
+% How to formulate your research objectives:
+% 1. Identify what research steps do you need to perform to achieve your general objective.
+% 2. Identify the questions that must be answered for you to achieve your general objective.
+%     Thereafter, convert these questions into action statements
+
+
+% Example #1:
+
+% Question:
+%     What strategies do human educators employ in collaborative storytelling with children?
+
+% Specific Objective:
+%    To review existing strategies employed by language educators when sharing storytelling with children
+
+
+% Example #2:
+
+% Question:
+%    How will you represent commonsense knowledge for use by computer systems?
+
+% Specific Objective:
+%    To identify knowledge representation approaches used by existing story generation systems
+
+% Example #3:
+% Question:
+%    What types of storytelling knowledge are needed to generate stories?
+
+% Objective:
+%     To identify the different types of storytelling knowledge used in generating stories
+
+% Example #4:
+% Question:
+%     What machine learning approaches will you utilize?
+
+% Specific Objective:
+%     To determine existing machine learning algorithms [that can be used in training the computer system to detect cyberbullying cases] 
+
+% Example #5: 
+% Question:
+%     How will your research output be evaluated?
+
+% Specific Objective:
+%     To define evaluation metrics for validating the accuracy of the translation
+% \end{comment}
+
+
+% %
+% %  The following is the format for presenting your specific objectives; replace them with your own 
+% %
+
+% The specific objectives of this research are as follows:
+% \begin{enumerate}
+%    \item To identify knowledge representation approaches used by existing story generation systems;
+%    \item To identify the different types of storytelling knowledge used in generating stories;
+%    \item To build a neural-based model for generating events comprising a story; and
+%    \item To define evaluation metrics for evaluating the performance of the event generation model.
+% \end{enumerate}
+
+\subsection*{General Objective}
+The general objective of this study is to investigate how the integration of multimodal video content features, creator-related features, and contextual features can improve the accuracy of predicting user engagement for short-form videos before they are posted.
+
+% OLD VERSION
+% \subsection*{Specific Objectives}
+% The specific objectives of this research are as follows:
+% \begin{enumerate}
+%     \item To build a dataset comprising multimodal content, creator-related, and contextual features for short-form videos. 
+%     \item To enhance an integrated and comprehensive model that combines multimodal content, creator-related, and contextual features in predicting potential engagement before short-form videos are posted.
+%     \item To evaluate the performance of the proposed model using established engagement metrics.
+% \end{enumerate}
+
+% REVISED 
+\subsection*{Specific Objectives}
+The specific objectives of this research are as follows:
+\begin{enumerate}
+    \item \hl{To operationalize a feature set of multimodal content, creator-related, and contextual features for predicting engagement in short-form videos.} 
+    \item \hl{To develop a model that predicts engagement on short-form videos prior to uploading.}
+    \item \hl{To evaluate the predictive accuracy of the proposed model using established engagement metrics.}
+\end{enumerate}
+
+%%
+%% --- 1.3 Scope and Limitations --- %%
+%%
+
+\section{Scope and Limitations of the Research}
+\label{sec:scopelimitations}
+
+% This section discusses the boundaries, with respect to the objectives, of the research and the constraints within which the research will be developed. Describe what is and is not included in the scope of your research, supported by your main research question and findings of previous studies. Do not use weak excuses such as the lack of time and/or knowledge to perform the research.
+
+% A good rule of thumb is to allocate one paragraph for each of your specific objectives that (1) contains a brief overview of the concept/theory and the purpose of doing the associated objective; and (2) includes a description of the scope/limitation of your study, and followed by brief purpose, rationale and/or justification for your decisions.
+
+% The following should also be indicated in your Scope and Limitations (in the appropriate paragraphs matching the objectives, or as a stand-alone paragraph):
+% \begin{itemize}
+%    \item The profile and demographics of your target participants
+%    \item Your data sources (i.e., new data, data from previous studies, data to be provided by some experts, data to be retrieved from social networks)
+%    \item The specific technology platform to be utilized
+%    \item The methods for collecting the data
+%    \item The coverage areas or locations
+%    \item The duration or time period (e.g., news articles for the year 2016-2017)
+% \end{itemize}
+
+\hl{In alignment with the general objective to investigate how integrated multimodal, creator-related, and contextual signals improve engagement forecasting}, the scope of this research is specifically bounded by the selection of these feature layers. The study utilizes a multimodal dataset of TikTok videos ranging from 5 to 60 seconds, incorporating raw MP4 files and audio spectrograms (content layer), follower counts and account age (creator layer), and specific posting hours and days (contextual layer). \hl{To ensure data consistency, the scope is focused on Filipino Micro-creators recruited through a standardized data donation process.} \hl{It is important to note that these variables constitute the initial feature set; while they provide the primary signals for this study, the methodology allows for the potential inclusion of additional features in future iterations to further enhance the model's predictive resolution}. Data acquisition is restricted to a user-initiated process where creators provide platform-verified exports \cite{li2024delving}. \hl{Consequently, a primary limitation of this approach is the potential for voluntary response bias and a smaller, more specialized sample size compared to large-scale automated scraping, which may affect the broader representativeness of the findings.}
+
+\hl{Regarding the development of a model for pre-upload prediction}, the research scope is centered on an ensemble architecture of Large Multimodal Models (LMMs), including VideoLLaMA2, Qwen2.5-VL, and InternVideo2. This framework is designed to address the cold-start problem by performing numerical engagement regression using only those signals available at the exact moment of upload, such as eight sampled keyframes and emotional audio cues \cite{sun2025engagement}. Technically, the study is bounded by the use of frozen LMM backbones as feature extractors due to computational resource constraints, which precludes full end-to-end fine-tuning \cite{li2025vquala}. Furthermore, because the predictive framework is optimized for the unique swiping mechanics and algorithmic patterns of the TikTok ecosystem, the generalizability of the model to other short-form platforms remains a methodological boundary.
+
+\hl{To evaluate the predictive accuracy of the proposed model, the study’s scope} adopts Engagement Continuation Rate (ECR) and Normalized Average Watch Percentage (NAWP) as the exclusive target variables. ECR measures the probability of retaining a viewer past the initial five-second ``hook,'' while NAWP provides a duration-normalized measure of total viewer retention. This evaluative boundary deliberately excludes traditional social metrics such as raw view counts, like rates, and shares, as these are frequently prone to duration bias and fail to capture genuine user preference in bimodal distributions \cite{sun2025engagement}. A resulting limitation of this focus is that the research optimizes for immediate attention and watch-time retention rather than forecasting long-term algorithmic virality or the total volume of social interactions \cite{li2024delving}. \hl{The model will also be compared to the models of} \citeauthor{sun2025engagement} \hl{and} \citeauthor{guan2025mmf} \hl{using the same dataset used for the proposed method. This ensures a fair comparison across the various models. These models were chosen because they are currently the best-performing models available for predicting SFV user engagement.}
+
+%%
+%% --- 1.4 Significance of the Research --- %%
+%%
+
+\section{Significance of the Research}
+
+% This section explains why research must be done in this area.  It rationalizes the objective of the research with that of the stated problem. Avoid including sentences such as ``This research will be beneficial to the proponent/department/college'' as this is already an inherent requirement of all BS and MS thesis projects.  Focus on the research's contribution to the Computer Science field.
+
+% The following are guide questions that may help your formulate the significance of your research. 
+
+
+% %
+% % IPR acknowledgement: the following list of items are from Ethel Ong's slides on Significance of the Research
+% %
+% \begin{itemize}
+% \item  What is the relevance and contribution of your work to the computer science community? 
+
+% \begin{itemize} 
+% \item How does your technical contributions or empirical findings advance the field or grow our body of knowledge? 
+% \item If you built a prototype of an interaction technique, interface, library, tool, or system, what is value does it add compared to existing solutions? 
+% \end{itemize}
+
+% \item What will be your contributions to society in general? 
+%     \begin{itemize}
+%       \item How will your main stakeholders benefit from your technical contributions or empirical findings? 
+%       \item What are the positive social or economic impacts? 
+%    \end{itemize}
+% \end{itemize}
+
+% \begin{comment}
+% If applicable, describe possible commercialization and/or innovation in your research.
+
+The rapid growth of SFV platforms has created a landscape where digital visibility is increasingly shaped by algorithm-driven engagement dynamics. In this context, the ability to anticipate audience response before publishing content has become a critical challenge for creators operating in highly competitive and fast-moving environments. By developing a predictive framework that integrates multimodal content signals with creator-related and contextual factors, this study contributes to a more proactive and creator-centered understanding of engagement modeling.
+
+Significantly, this study offers practical implications for content creators themselves. By exploring how different feature types contribute to engagement outcomes, the findings may provide actionable insights into how content design, audience familiarity, and posting context interact in shaping viewer response. Such insights may help creators move beyond intuition-based strategies and toward more data-informed creative workflows, without requiring deep technical expertise.
+
+\hl{From a computer science perspective, this research extends existing work in multimodal learning and engagement prediction by shifting the focus from platform optimization toward pre-publication decision support.} While prior studies have primarily explored engagement modeling for large-scale distribution systems, this work investigates how predictive models can be adapted for early-stage estimation. The integration of content, creator, and contextual features offers a more holistic modeling approach that may inform future developments in multimodal machine learning, human-centered AI, and applied predictive analytics.
+
+\hl{Beyond technical contributions, this study carries economic relevance within the growing creator economy.} As short-form content increasingly functions as a source of livelihood, the ability to estimate engagement before posting may help creators make more informed production decisions, reduce trial-and-error costs, and allocate time and creative resources more strategically. Predictive insights may also support emerging creators who lack access to large audiences or analytics tools, potentially lowering barriers to entry and promoting more sustainable participation in digital content markets.
+
+\hl{At a societal level, enabling creators to better understand engagement dynamics may contribute to a more diverse and balanced content ecosystem.} When creators can evaluate potential performance earlier, they may be more willing to experiment with niche topics, educational content, or underrepresented narratives that might otherwise be overshadowed by purely trend-driven production. In this sense, creator-oriented predictive tools may indirectly support content diversity, digital inclusion, and more meaningful audience--creator interactions.
+
+Finally, this work establishes a foundation for future research at the intersection of engagement prediction and creator-centered technologies. By demonstrating the feasibility of pre-upload engagement estimation, the study opens directions for further exploration in areas such as creator-assistive tools, intelligent content feedback systems, and human--AI collaboration in digital media production. In doing so, it reframes engagement prediction not only as a platform-level optimization problem but as an opportunity to design technologies that directly empower creators.
+
+% These are some guidelines given and commented out in the template. Retained for future writing references.
+
+% \subsection{Figures}
+
+% Often times, a graph, illustration, screenshot, or any image can help a reader better understand what we say in text. In academic writing, we call them \textbf{figures}. Please add as many figures as necessary to help build your narrative, but do not go overboard. 
+
+% You can add figures in JPG or PNG format as shown in Figure \ref{fig:disneystock}. All figures should also have a descriptive caption. As a general principle, your caption should adequately describe what is shown in the figure, and not just short texts. If we remove all the surrounding text, the reader should still understand what your figure is. 
+
+% All figures should be referred to at least once in the surrounding paragraphs. Make sure that you explain what the figure is all about, and that you refer to your figure. You can also use the surround paragraphs to highlight key insights or parts of your figure. For example, \figref{fig:disneystock} shows a graph of the performance of Disney stock from the 1980s to 2012.
+
+%--- the following example shows how to include a figure in PNG format
+% \begin{figure}[t]                %-- use [t] to place figure at top, [b] to place at the bottom, [h] for here
+%    \centering                    %-- use this to center the figure
+%    \includegraphics{DisneyChart.png}      %-- include image file named as "disneychart.png" 
+%    \caption{Disney's stock price chart from the 1980s up to 2012. The top chart shows the stock price in each month. The bottom chart shows the change in volume of transactions. The bars are colored based on the type of movement that happened in a month.}
+%     \label{fig:disneystock}
+% \end{figure}
+
+% \subsection{References}
+
+% Some notes on citing references. When using APA format, the author-date method of citation is followed. This means that the author's last name and the year of publication for the source should appear in the text, and a complete reference should appear in the reference list.
+
+% %
+% % Examples:
+% %     	Smith (1970) compared reaction times . . .
+% %     	In a recent study of reaction times (Smith, 1970), . . .   
+% %     	In 1970, Smith compared reaction times . . .
+% %	Smith, et al., (1970) compared reaction times . . .
+% %     	In a recent study of reaction times (Smith, et al., 1970), . . .  
+% %     	In 1970, Smith, et al., compared reaction times . . .
+% %
+
+% Here are some examples on how to do the referencing (note author's name and years are different from commented examples). For APA citation details, refer
+% to \url{http://www.ctan.org/tex-archive/biblio/bibtex/contrib/apacite/}. 
+
+% \begin{itemize}
+%  \item \citeA{kartch:2000:ERA} compared reaction times...
+%  \item In a recent study of reaction times \cite{kartch:2000:ERA}...
+%  \item In \citeyearNP{kartch:2000:ERA}, \citeauthor{kartch:2000:ERA} compared reaction times...
+%  \item \shortciteA{fedkiw:2001:VSO} compared reaction times... 
+%  \item In a recent study of reaction times \cite{fedkiw:2001:VSO}...
+%  \item In \citeyearNP{fedkiw:2001:VSO}, \shortciteauthor{fedkiw:2001:VSO}, compared reaction times...
+% \end{itemize}
+
+% The following are references from journal articles \cite{Park:2006:DSI, Pellacini:2005:LAH, sako:2001:SSB}.  Here's an MS thesis document \cite{yee:2000:SSA}, and this is from a PhD dissertation \cite{kartch:2000:ERA}. For a book, reference is given as \cite{parke:1996:CFA}.  Proceedings from a conference samples are \cite{Jobs95, fedkiw:2001:VSO,levoy:2000:TDM}.  
+
+% The sample bibliography file named \textbf{myreferences.bib} is from the
+% SIGGRAPH \LaTeX template.  You can use a text editor to view the contents of the bib file. It is your task to create your own bibliography file.  For those who downloaded papers from ACM or IEEE sites, there is a BibTeX link that you can click; thereafter, you just simply need to copy and paste the BibTeX entry into your own bibliography file.
+
+% \subsection{Code snippet}
+
+% The following shows how to include a program source code (or algorithm). The verbatim environment, as the name suggests, outputs text (including white spaces) as is...
+
+% \begin{verbatim}
+%                #include <stdio.h>
+%                main()
+%                {
+%                     printf("Hello world!\n");
+%                }
+% \end{verbatim}

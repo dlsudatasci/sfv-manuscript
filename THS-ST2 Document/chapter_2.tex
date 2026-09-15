@@ -1,0 +1,155 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%   Filename    : chapter_2.tex 
+%
+%   Description : This file will contain your review of related works.
+%                 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{Related Works}
+\label{sec:relatedworks}
+
+%This chapter provides a synthesis of past research, existing algorithms, and or state-of-the-art software that are related/similar to the thesis. It should not present detailed summaries of each related work, but rather present a cohesive comparison of different aspects of their work. At the end of each section and this chapter, it should be clear what research challenges and opportunities will be focused on for the proposal.
+
+%The sections can be about approaches, application areas, and categories of solutions that give readers an deep understanding of the current state of the field. 
+
+%Observe a consistent format when presenting each of the reviewed works. This must be selected in consultation with the prospective adviser.
+
+%\textcolor{red}{DO NOT FORGET to cite your references.} Related works can be discussed multiple times in different sections of this chapter, depending on what is being discussed or compared.
+
+
+\begin{comment}
+%
+% IPR acknowledgement: the contents within this comment are from Ethel Ong's slides on RRL.
+%
+Guide on Writing your Related Works chapter
+ 
+1. Identify the keywords with respect to your research
+      One keyword = One document section
+                Examples: 2.1 Story Generation Systems
+			 2.2 Knowledge Representation
+
+2.  Find references using these keywords
+
+3.  For each of the references that you find,
+        Check: Is it relevant to your research?
+        Use their references to find more relevant works.
+
+4. Identify a set of criteria for comparison.
+       It will serve as a guide to help you focus on what to look for
+
+5. Write a summary focusing on -
+       What: A short description of the work
+       How: A summary of the approach it utilized
+       Findings: If applicable, provide the results
+        Why: Relevance to your work
+
+6. At the end of each section,  show a Table of Comparison of the related works 
+   and your proposed project/system
+
+\end{comment}
+
+
+\section{Evolution of Engagement Metrics in Short-Form Video}
+Traditionally, academic research into social media has focused on a ``content-centric'' approach. This means scholars primarily looked at the physical parts of a video such as lighting, colors, music, quality, and title to predict if the video would be successful \cite{8549180}. These studies treated engagement as a static output, or a final score that never changes once the video is uploaded. This approach assumes that a video exists in a vacuum, where the content is the only thing that matters. However, this approach fails to explain why the exact same video can perform differently depending on who posts it or when it is shared. To address this, current research utilizes temporal and social features such as early view counts, likes, and shares to account for the impact of a publisher's social network and early distribution patterns on a video's future popularity \cite{trzcinski2017predicting}. These models demonstrate that while visual features provide an initial baseline, social signals like comments and shares are much stronger predictors of long-term success.
+
+To solve the ``cold start'' problem where a new video has zero interaction history modern architectures now utilize implicit stylistic features such as mood and motion to predict relevance. By employing deep learning frameworks like DeepLDA, researchers can maximize the separation between relevant and irrelevant content even in the absence of explicit metadata. This suggests that ``virality'' is no longer just a reaction to what is on the screen, but a complex interaction between these intrinsic stylistic anchors and the dynamic behavior of the audience \cite{kumar2018icebreaker}.
+
+In order to understand the fast-paced world of video entertainment, research is moving away from simplistic metrics like view counts and likes, toward more complex behavioral indicators. Traditional metrics often fail in the SFV domain; like rates yield extremely small, indistinguishable values across different videos, and Average Watch Time (AWT) introduces a severe duration bias, as longer videos naturally exhibit different consumption patterns than shorter ones. Furthermore, the unique UI design of SFV platforms encourages a ``swiping'' culture, resulting in a bimodal distribution of engagement where users either skip uninteresting content immediately or dedicate significantly more time to captivating videos. To capture this specific viewing behavior, this study focuses on two specialized metrics introduced by \citeauthor{li2024delving} \citeyear{li2024delving}: Engagement Continuation Rate (ECR) and Normalized Average Watch Percentage (NAWP).
+
+    \begin{itemize}
+        \item ECR measures the ``hook'' of a video by calculating the probability that a viewer continues watching past the first 5 seconds, denoted as $P(\text{watch} > 5\text{s})$. This assesses whether the visual and auditory outset is captivating enough to stop a user from swiping.
+    \end{itemize}
+    
+    \begin{itemize}
+        \item NAWP measures ``retention'' by mitigating the duration bias inherent in raw watch times. It normalizes a video's average watch time against a generalized linear trend of top-performing videos of varying lengths. This provides a universal metric for overall engagement level, regardless of whether a video is 10 or 60 seconds long.
+    \end{itemize}
+    
+
+While in \citeauthor{li2025vquala}'s \citeyear{li2025vquala} research later on they utilized ECR and NAWP to predict engagement purely from multi-modal video content—explicitly excluding user and creator cues to address the cold-start problem—they acknowledge that these metrics remain inherently influenced by the exploitation strategies of platform recommendation systems. For instance, view numbers and initial distributions are heavily skewed by algorithms favoring well-known content creators over new ones. Therefore, this study argues that treating ECR and NAWP merely as reactions to the physical content on the screen is insufficient. Because engagement is deeply contextual and heavily biased by platform algorithms, predicting a video's true hook rate (ECR) and retention (NAWP) becomes significantly more accurate when integrating channel-related and creator-specific features. Previous models often ignored these external factors; however, we argue that the source of the content is just as vital as the content itself in determining long-term user behavior.
+
+
+
+\section{Datasets for User-Generated Content}
+
+The construction of datasets for user-generated content (UGC) has transitioned from static collections of platform metadata to high-dimensional multimodal benchmarks \cite{violot2024shorts, li2024delving, li2025vquala}. Early dataset designs were characterized by large-scale scraping efforts that primarily gathered popularity signals such as view counts, likes, and comment ratios as the core features for analysis \cite{violot2024shorts}. These metadata-driven approaches provided a high-level view of content reach but were frequently criticized for their inability to account for algorithmic amplification and duration bias. To refine these feature sets, more sophisticated normalization techniques were introduced, such as Cumulative Distribution Function (CDF)-based popularity standards, which allowed for meaningful cross-category comparisons within social media marketing environments \cite{cho2024amps}. As the field matured, the design of these datasets shifted toward the inclusion of richer multimodal streams, incorporating high-dimensional video, audio, and textual data. This transition also saw the emergence of behavior-based labeling, where granular metrics like the ECR and NAWP were integrated as labels to more accurately represent the critical window of user attention \cite{li2024delving, li2025vquala}.
+
+Research on the cold-start problem focuses on how models predict the success of a new video without historical interaction data. Current benchmarks, such as the SnapUGC dataset used in the VQualA 2025 Challenge, address this by prioritizing multimodal features including video, audio, and text metadata to predict initial viewer retention \cite{li2025vquala}. This approach differs from historical-data modeling, which relies on past performance and is not used for new uploads where the first few seconds of exposure are the main factors. These datasets generally treat the cold-start problem as a content-only task, assuming that the video file and its metadata are the primary predictors of success when interaction history is missing. While this approach helps isolate the impact of a video's hook, it often overlooks that other information is available at the time of publication. Structured features like posting time, category, and creator follower count are accessible even for new uploads, yet current frameworks primarily focus on high-dimensional pixel and audio data instead \cite{ge2025lmm}.
+
+The scale and composition of these datasets vary significantly based on their sourcing and temporal coverage. The Shorts dataset \cite{violot2024shorts} aggregates over 10 million data points sourced through extensive platform scraping, covering a broad temporal range of YouTube Shorts activity to capture macro-level popularity trends. In contrast, the SnapUGC benchmark used in the VQualA challenge \cite{li2025vquala} focuses on high-fidelity temporal coverage of a video's initial release window to precisely model the decay of viewer retention. Processing these datasets typically involves engineering raw media signals into dense embeddings, where video frames are sampled and audio is converted into spectrograms to align with textual metadata. These features are often further refined through Z-score normalization and the use of pre-trained multimodal encoders, ensuring that disparate data streams are projected into a unified space for evaluation \cite{li2024delving, violot2024shorts}.
+
+Current dataset design mostly assumes that engagement prediction for new videos should focus only on the content itself. This leaves a gap in research regarding how the conditions of a video's release affect its performance alongside its actual quality. Our work identifies that structured contextual and creator-related features available at the time of upload are rarely included in existing benchmarks. By adding these features to multimodal content data, our study builds upon current cold-start models rather than replacing them. This approach treats engagement as a result of both the video's hook and the creator's existing platform context.
+
+
+\section{Current Multimodal and Large Multimodal Model Architectures}
+
+Current models for predicting engagement has transitioned from single-modality pipelines to multi-branch frameworks. Traditional multimodal models address the cold-start problem by extracting features from visual, audio, and textual streams using specialized encoders like CNNs, ViTs, or BERT \cite{cho2024amps, guan2025mmf}. Recent benchmarks established in global competitions emphasize that audio integration and uniform keyframe sampling—specifically focusing on the first eight frames—are now necessary for capturing the temporal dynamics of short-form content \cite{li2025vquala, sun2025engagement}. These architectures typically employ regression heads to map high-dimensional multimodal embeddings to a numerical ECR score. While these systems have improved prediction accuracy, they primarily function as content-centric evaluators that overlook the environmental conditions of the video's publication.
+
+Recent developments in the field focus on using Large Multimodal Models (LMMs), which leverage pre-trained backbones to achieve semantic reasoning. Recent studies now utilize ensembles of models such as VideoLLaMA2 and Qwen2.5-VL to capture audio-visual synergies \cite{sun2025engagement}. Unlike previous models, LMMs can understand social context and visual style, which helps them work better on real-world social media posts compared to specialized quality assessment tools \cite{ge2025lmm}. Some frameworks have moved away from traditional regression, reformulating the task as a generative Question and Answering (Q\&A) problem to provide interpretable quality labels alongside numerical scores \cite{ge2025lmm}. Collectively, these studies demonstrate that the multimodal representations embedded in LMMs are effective predictors of human-centric engagement.
+
+Despite these architectural advancements, most SOTA systems remain content-centric. High-performance LMMs and attention-based models still face limitations in the cold-start problem because they are not designed to include contextual signals and creator history. While these systems are capable of reasoning about the video file itself, they ignore external variables such as follower count, posting time, and trend signals that alter a video's reach.
+
+In contrast, our work extends rather than replaces these existing multimodal frameworks. By integrating structured contextual and creator-related features alongside the multimodal embeddings generated by LMMs, our study augments the standard predictive pipeline. This study evaluates whether these non-content signals provide the necessary metadata to bridge the gap between content quality and actual engagement. Consequently, this research positions itself as an extension of current LMM architectures, moving toward a context-aware modeling of the short-form UGC ecosystem.
+
+\section{Factors that Drive User Engagement}
+
+\subsection{Multimodal Content}
+The video content itself informs user engagement. Recent works analyzed multimodal content features in predicting user engagement \cite{guan2025mmf, li2024delving, sun2025engagement}. These studies focused on engagement prediction in cold-start situations, wherein newly uploaded videos have no data attached to them. They utilized LMMs, considering the visual, audio, and textual features of the video to predict engagement. One gap in these studies is that they only focused their predictions based on features derived from video content. While this is a good starting point, they fail to consider factors outside of the video content. With this, our study will build on the models used in those previous studies by incorporating other factors that drive engagement.
+
+\subsection{Creator-Related Factors}
+Aside from content, the creator also plays a role in their video engagement, particularly their social influence. In social media marketing spaces, having a higher number of followers is positively correlated with engagement \cite{peng2024untangling, sadeque2019predicting}. This is in line with the social influence theory, wherein creators are deemed popular when they have more followers than followees. Their followers would feel connected to the creator, and so they would engage with them \cite{peng2024untangling}. In contrast, a different study found that TikTok videos from non-followed accounts were viewed to completion more often than from followed accounts \cite{zannettou2024analyzing}. This may be because videos from non-followed accounts are more compelling and more popular to other users, as shown in Figure \ref{fig:video_popularity}. In addition, older accounts were found to have lower engagement as compared to newer accounts \cite{peng2024untangling}. This could be due to the fact that being exposed to the same thing over time makes audiences less likely to engage with it \cite{peng2024untangling, sadeque2019predicting, wies2023finding}.
+
+Understanding how creator-specific data affects engagement provides creators with insights that can allow them to have a more informed content creation process. In the context of this study, incorporating these features into a predictive model allows creators to have a better expectation of the performance of their videos before they are even uploaded.
+
+% \begin{figure}[h]
+%     \centering
+%     \includegraphics[width=0.5\linewidth]{popularity_following_non_following.png}
+%     \caption{Comparison of video popularity from followed vs non-followed accounts \cite{zannettou2024analyzing}}
+%     \label{fig:video_popularity}
+% \end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\linewidth]{chap2/popularity_following_non_following.png}
+    \caption[Comparison of video popularity from followed vs non-followed accounts]
+    {Comparison of video popularity from followed vs non-followed accounts. The videos from accounts you don't follow are played more than videos from accounts you do follow \cite{zannettou2024analyzing}.}
+    \label{fig:video_popularity}
+\end{figure}
+
+\subsection{Contextual Factors}
+The posting time of social media posts matters \cite{kanuri2018scheduling, manic2024short, spasojevic2015post}. Creators would want to know when the best time for posting is, so that they can maximize the probability of their posts receiving audience reactions \cite{spasojevic2015post}. For example, releasing videos during peak hours takes advantage of the natural peaks in user activity, as shown in Figure \ref{fig:reaction_probability}. Another study analyzed the posting behavior of online bloggers \cite{lee2012temporal}. They found that each blogger has their own preferences for when to post. From the Figures \ref{fig:reaction_probability} and \ref{fig:posting_activity}, we can see that the number of blog posts per day relates to the reaction probabilities per day, where there is a higher number during Mondays, Tuesdays, and Wednesdays. It can also be observed that peak blog posting times were from 12 AM to 2 AM, while there is a higher reaction probability during midday. Building on these observations, we believe that creators can improve their engagement by aligning upload schedules with peak user activity. In cold-start scenarios where a video has no history of user interaction data, uploading during peak activity allows creators to maximize the post’s exposure. With this, creators can proactively influence their engagement metrics and reduce uncertainty during the cold-start period.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\linewidth]{chap2/reaction_probability.png}
+    \caption[Reaction probability graph over a week.]
+    {Reaction probability over a week. There are noticeable peaks during midday and dips at midnight. It is also generally higher during the weekdays than it is on the weekends \cite{spasojevic2015post}.}
+    \label{fig:reaction_probability}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.48\linewidth]{chap2/posting_activity_week.png}
+    \includegraphics[width=0.48\linewidth]{chap2/posting_activity_day.png}
+    \caption[Posting activity on blogging sites]
+    {Posting activity on blogging sites. The dotted line represents the overall average, while the solid line represents the day- or time-specific average. There is a higher activity during the weekdays compared to weekends. Similarly, there are spikes in activity at midnight, 9 AM, and 2 PM \cite{lee2012temporal}.}
+    \label{fig:posting_activity}
+\end{figure}
+
+
+% Social trends also influence user engagement. Trend following refers to the strategy of riding trends to maximize profit \cite{hurst2017century, szakmary2010trend}. In the context of social media, following trends allows for more visibility and engagement. A study found that atypicality or deviating from trends received more engagement from users \cite{bravin2025follow}. 
+
+Our study will investigate the effects of follower count, creator age, and posting time for predicting user engagement for short-form videos, in addition to the multimodal features derived from the video content. 
+
+
+\section{Micro-Influencer Content Creators}
+The subjects of this study are situated within the creator economy, the ecosystem of independent content producers who build and monetize audiences on platforms such as TikTok, YouTube, and Instagram. Goldman Sachs estimates this economy at roughly \$250 billion and projects it to reach \$480 billion by 2027, sustained by an estimated 50 million creators worldwide, of whom only about 4\% earn more than \$100,000 annually \cite{creator_economy_2027}. This distribution is consequential for the present study: the overwhelming majority of creators are not celebrities supported by dedicated analytics teams, but individuals attempting to professionalize, for whom a pre-publication estimate of engagement is a genuinely consequential and currently unmet decision aid. Within the widely used creator taxonomy, these individuals are typically classified as micro-influencers—creators with approximately 10,000 to 100,000 followers—positioned between nano-influencers and the macro, mega, and celebrity tiers \cite{anymindgroup_2026_state, Campbell_Farrell_2020}.
+
+The micro-influencer tier is the most appropriate population for testing pre-publication, cold-start engagement prediction. First, engagement in this tier is comparatively content-driven rather than reach-saturated. Empirical work reports an inverse relationship between audience size and proportional engagement: as follower counts grow into the macro and mega ranges, engagement rates decline, and interactions become increasingly a function of broad parasocial recognition and near-guaranteed algorithmic reach rather than of the properties of the individual video \cite{De_Veirman_Cauberghe_Hudders_2017, Conde_Casais_2023}. For a model intended to attribute engagement variance to content, creator, and contextual signals, this makes micro-creators a higher signal-to-noise population, since the outcome still varies meaningfully with what is posted and when, rather than being predetermined by celebrity status.
+
+Second, celebrity and mega accounts are unsuitable precisely because their baseline reach is near-guaranteed. Their large established follower bases and preferential algorithmic distribution—the same platform bias acknowledged in Section 2.1---mean that each new upload does not face a genuine cold-start condition, as the distribution is largely secured before the content is evaluated on its own merits. Modeling such accounts would confound the intrinsic pre-publication potential this study seeks to estimate with the algorithmic amplification afforded to already-famous creators. These accounts also constitute a statistically negligible and non-representative fraction of the creator population \cite{creator_economy_2027}, limiting the external validity of any tool trained on them.
+
+Third, restricting the population to authentic micro-creators protects the integrity of the ground-truth labels. Automated and inauthentic accounts—bots, purchased followers, and engagement farms—generate fabricated interaction signals that do not reflect genuine viewer behavior. Industry audits have repeatedly found that a substantial share of influencer accounts exhibit some form of follower or engagement fraud, with fake followers the single most prevalent category \cite{HypeAuditor_2025}. Training on such contaminated signals would teach the model to reproduce manufactured rather than real engagement. Because this study derives its labels from first-party analytics voluntarily donated by verified account holders (Section 4.1.1), recruiting genuine micro-influencers—rather than scraping high-follower accounts of uncertain authenticity—yields ECR and NAWP labels that correspond to real audience behavior.
+
+Taken together, these considerations motivate the recruitment of active Filipino micro-influencers with 10,000 to 100,000 followers for the MicroTok-PH dataset (Section 4.1.1). This tier is large enough to exhibit stable, analyzable engagement patterns yet small enough that a video's reception remains contingent on its content and context rather than predetermined by fame or fabricated by automation—the conditions under which pre-publication cold-start prediction is both meaningful and testable.
+

@@ -1,0 +1,87 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%   Filename    : chapter_1.tex 
+%
+%   Description : This file will contain your Research Description.
+%                 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{Introduction}
+\label{sec:researchdesc}    %--note: labels help you with hyperlink editing (using your IDE)
+
+This chapter begins with a background on active transportation and the development of bike lane network infrastructures. It then discusses the current state of technology related to crowdsourcing cyclist experiences, followed by the research objectives, scope and limitations, and the significance of the study.
+
+\section{Background of the Study}
+\label{sec:overview}
+
+%
+%   NOTE: You have to delete/replace the unnecessary paragraphs with your own text.
+%
+The growing demand for active transportation has brought significant attention to bike lanes globally, especially during and after the COVID-19 pandemic, which reshaped commuting habits. Based on a study from \citet{Younes:2023}, there was a significant increase in bicycle sales during the pandemic, with about 50\% of respondents having access to a bicycle and one-third purchasing a bicycle during this period. In this case, 17\% of new bicycle purchasers reported they had never biked before the pandemic, indicating a new interest in cycling. A surge in bicycle ownership and ridership has been observed worldwide, fueled by a collective desire for sustainable, eco-friendly, and health-conscious travel options. For instance, bicycle sales in the United States rose by 57\% between April 2020 and April 2021; in France, total bike sales increased by 1.7\% to 2.68 million; cycling market growth in the United Kingdom was reported at up to 60\%; while overall bike sales in Germany surged by 17\% \citep{Francke:2022}. Major cities abroad, such as Paris and New York, responded to this by rapidly expanding their cycling infrastructure with dedicated bike lanes to accommodate the surge in demand and promote a bike-friendly culture \citep{NYC_DOT:2023}. European cities have spent €1 billion on cycling projects in 2020, making about 1,000 kilometers of new bike lanes and car-free areas (van Vugt, 2024). With this, cities abroad have transformed their urban planning to prioritize cycling infrastructure to create more inclusive, multi-modal streetscapes that cater not just to cars but also to non-motorized vehicles.
+
+In the Philippines, the narrative follows a similar trend. Metro Manila, a region historically dependent on motor vehicles, saw an increase in bicycle ridership during the pandemic. Reports show that bicycle ownership in the Philippines doubled between 2020 and 2023. A Social Weather Stations (SWS) survey conducted from May 2020 to March 2023 found that bicycle ownership surpassed car ownership nationwide. The proportion of households with bicycles rose to 36\% in March 2023, up from 29\% in 2022 and just 11\% in 2020 \citep{Cervantes:2023}. With this, the boom in biking prompted Philippine officials to allocate a budget in September 2020 to build a 500-kilometer bike lane network in Metropolitan Manila, while many local government units also deploy their resources to provide bike-related infrastructure, ordinances, and programs within their districts.
+
+Globally, the push for active transportation reflects broader advocacy efforts aiming to create more inclusive urban spaces. Bike lanes, designed to provide safe routes for cyclists, address the demand for eco-friendly mobility and reduce urban congestion. Yet, building these infrastructures requires significant planning and investment. While cities such as Amsterdam and Copenhagen have long been examples of bike-friendly infrastructure, newer players like Manila have only recently started investing in similar projects. Reports highlight government-initiated plans such as the Department of Transportation's initiatives to promote bike lanes; however, these lanes often fall short due to development issues like poor connectivity and inadequate safety measures. While progress has been notable, Metro Manila's bike lane infrastructure has struggled to meet the rising expectations of accessibility and safety demanded by an ever-growing community of cyclists.
+
+Despite these efforts, limitations persist, revealing the imperfect nature of current bike lane networks. Cyclists frequently encounter safety hazards, including sudden obstacles, potholes, parked cars blocking bike paths, and incomplete network routes that force risky maneuvers \citep{MNLBulletin:2023}. Accident reports involving cyclists continue to rise, showcasing the inadequacies in infrastructure that need urgent attention. According to a report by the Metropolitan Manila Development Authority (MMDA) on bicycle-related road crash statistics in Metro Manila, 2,397 cyclists were involved in accidents, with 33 resulting in fatalities \citep{MNLBulletin:2023}. The reality remains that shared lanes and subpar road conditions hinder both accessibility and safety, creating barriers to the widespread adoption of cycling as a primary means of transport.
+
+The user experience on bike lanes is influenced by numerous factors—road quality, connectivity, traffic density, and interactions with other road users. Factors such as lane condition, traffic behavior, and environmental considerations significantly impact cyclists' overall experience and must be integral to the evaluation and design of bike lanes \citep{Ketikidis:2023}. Cyclists' firsthand experiences illustrate these issues: video footage uploaded by cyclists onto social media platforms often reveals obstacles, hazardous road conditions, and accident-prone scenarios. These recordings offer valuable, real-time perspectives that could be harnessed to better understand and improve the biking landscape.
+
+However, there is a noticeable lack of structured data that incorporates user experience in the context of Metro Manila's bike lanes. While some raw data exists, it is fragmented and overlooks the subjective experiences of cyclists that are essential for fostering safer and more accessible infrastructure. Moreover, in the context of the Philippines, collecting accurate and comprehensive data on bike lane usage and cyclist experiences poses significant challenges. Limited resources, varying local government capabilities, and inconsistent reporting standards hinder effective assessment and planning. Addressing this gap, our study proposes a crowdsourcing approach to gather and analyze cyclist experiences through a mobile application. By leveraging user-generated content, such as videos shared online, our platform aims to collect comprehensive data on road elements and user behaviors. Machine learning models, including image segmentation, helped analyze this data, extracting details about road quality, obstacles, and interactions among road users. 
+
+Our goal is to develop a robust dataset enriched with geospatial and experiential data that could inform better infrastructure planning and policy. This community-driven effort not only created a repository of valuable information but also cultivate a sense of shared responsibility among cyclists to contribute to the collective pursuit of safer, more accessible bike lanes.
+
+\section{Research Objectives}
+\label{sec:researchobjectives}
+
+
+\subsection{General Objective}
+\label{sec:generalobjective}
+The main objective of this study is to crowdsource and analyze cyclists' experiences from videos recorded during their trips and analyze them.
+
+
+\subsection{Specific Objectives}
+\label{sec:specificobjectives}
+
+\begin{enumerate}
+    \item To design and develop a crowdsourcing platform that enables cyclists to share their trips and cyclist-mounted video footage. 
+    \item To train a model to extract active road users and road elements from the crowdsourced video data. 
+    \item To generate a dataset containing road elements and road user behavior from the extracted information.
+\end{enumerate}
+
+\section{Scope and Limitations of the Research}
+\label{sec:scopelimitations}
+
+This research aims to design and develop a crowdsourcing platform, train a model to extract critical elements from crowdsourced video data, and generate a dataset combining road elements, road user behaviors, and geospatial data to provide a comprehensive view of urban cycling conditions. The study is conducted within the context of urban and semi-urban areas, offering a real-world analysis of cyclist experiences.
+
+The proposed smartphone application empowers cyclists to record and upload their cycling trips, capturing valuable video and GPS data to provide a firsthand perspective on urban cycling conditions. The app is designed with a focus on user-friendliness, accessibility, and data security. However, it's important to acknowledge that the data collected may be biased towards more engaged cyclists and might not fully capture the experiences of all cyclists, particularly those without access to smartphones or with limited digital literacy.
+
+A key component of this research is the development of a model trained on a custom dataset of user-generated videos. This model is capable of detecting and segmenting various road users and infrastructure elements, aiding in the analysis of cyclist behavior and road conditions. However, the model's accuracy and generalizability are limited by the specific objects and scenarios included in the training data. It may struggle to accurately identify objects and behaviors in complex traffic situations or in environments significantly different from those in the training dataset.
+
+The generated dataset provided valuable insights into cyclist behavior, road usage patterns, and infrastructure interactions. However, it's important to note that the dataset may be biased towards popular routes and may not fully represent the experiences of all cyclists. Additionally, the data collection is limited by geographic and temporal factors, which may restrict the generalizability of the findings.
+
+\section{Significance of the Study}
+\label{sec:significance}
+
+Crowdsourcing has shown potential in improving urban infrastructure assessments through real-time data collection from the public. However, its application in systematically building datasets for cycling infrastructure development remains underexplored, particularly in urbanizing countries like the Philippines. The research aims to present a complete system for capturing and analyzing cyclist experiences through a structured crowdsourcing approach. The significance of the research lies not only in the final dataset produced but also in the development of the end-to-end platform that enables its creation.
+
+A key contribution of this study is the design and implementation of a mobile-based crowdsourcing platform tailored to cyclists. The platform enables users to record their trips, collect GPS data, and upload first-person video footage, alongside optional annotations describing their real-time experiences. This system facilitates the continuous and distributed gathering of cyclist-generated data, providing perspectives that are difficult to capture using traditional survey or sensor-based approaches.
+
+In addition to the platform itself, the study also contributes a modular data pipeline that processes raw input from cyclists into a structured, segment-level spatial dataset. This pipeline handles ride segmentation, extraction of spatiotemporal metrics, and integration of annotations, whether manually contributed or automatically generated through computer vision models. The resulting dataset uses the GeoJSON format to represent individual route segments, enriched with information on speed, distance, elevation, and environmental conditions as reported or detected.
+
+The dataset produced through this system has a wide range of applications relevant to both research and policy-making. These include:
+
+\begin{itemize}
+\item Infrastructure audits for identifying gaps in bike lane coverage and connectivity.
+\item Visualization of cyclist sentiment and road experiences at the segment level.
+\item Hazard mapping and identification of dangerous areas based on frequent annotations.
+\item Routing applications that recommend safer or smoother paths based on historical data.
+\item Machine learning training data for models focused on urban mobility or infrastructure assessment.
+\end{itemize}
+
+From a technical perspective, this research demonstrates how user-generated video and geospatial data can be transformed into a consistent and analyzable format. It contributes a repeatable methodology for crowdsourced data collection, spatial structuring, and annotation processing that can be adapted or expanded in future work.
+
+From a societal perspective, the system enables cyclists to actively participate in infrastructure monitoring by providing a platform through which their everyday experiences become part of a collective data resource. This participatory approach ensures that infrastructure assessments are grounded in the lived realities of road users, especially in contexts where official data is incomplete or outdated.
+
+In summary, the study contributes a functional and scalable system for crowdsourcing cyclist experiences, a spatially structured dataset with both qualitative and quantitative attributes, and a set of practical applications that support evidence-based planning and advocacy for safer, more accessible urban mobility.
+
