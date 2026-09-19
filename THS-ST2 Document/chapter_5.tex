@@ -15,7 +15,7 @@ The TikTok Analytics Exporter is a Chrome extension that enables TikTok creators
 
 The extension operates entirely within the user's browser, utilizing a high-level architecture designed for simplicity and privacy. As the user navigates TikTok Studio, the browser communicates directly with the TikTok API to fetch analytics data. An overview of the extension's architecture is shown in Figure \ref{fig:extension-architecture}.
 
-Instead of having a persistent background process, the extension passively intercepts this data and stores it temporarily in the browser's session storage. This in-browser session storage acts as the primary mechanism for maintaining state. When the user initiates an export, the extension compiles this locally stored data into a structured formate without making any additional API requests, ensuring that the export process is entirely self-contained and relies only on the data already present on the user's machine.
+Instead of having a persistent background process, the extension passively intercepts this data and stores it temporarily in the browser's session storage. This in-browser session storage acts as the primary mechanism for maintaining state. When the user initiates an export, the extension compiles this locally stored data into a structured format without making any additional API requests, ensuring that the export process is entirely self-contained and relies only on the data already present on the user's machine.
 
 \section{User Flow}
 
