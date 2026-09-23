@@ -290,6 +290,10 @@ Raw video files and their associated analytics metadata will be formatted to the
 
 follower\_count and days\_since\_first\_post will be normalized to a mean of $\mu=0$ and a standard deviation of $\sigma=1$. The day and time of posting will be represented through cyclical encoding to preserve their periodic nature. 
 
+\hl{The target variables will be handled separately during model development. C3-LMM will be trained to predict ECR, which will serve as the model's sole supervised target. NAWP values will not be provided as model inputs or predicted directly by the LMMs. Instead, they will be retained as reference values for estimating and evaluating the relationship between ECR and NAWP.}
+
+\hl{After the creator-disjoint partitioning of the dataset, a correlation-based conversion factor will be estimated using the training set. This factor will then be applied to the predicted ECR values to obtain the corresponding NAWP estimates. The validation set may be used to select or calibrate the conversion factor, while the test set will remain unused until the final evaluation. This procedure prevents information from the test set from influencing either the ECR model or the conversion of ECR predictions into NAWP estimates. Thus, ECR represents the model's direct prediction target, whereas NAWP represents a derived secondary output.}
+
 
 % \subsection{Data Cleaning and Quality Assurance}
 
